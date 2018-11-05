@@ -25,25 +25,15 @@ function getItemStyles(props) {
 	const transform = `translate(${x}px, ${y}px)`
 	return {
 		transform,
-		// WebkitTransform: transform,
 	}
 }
-
-// export interface CustomDragLayerProps {
-// 	item?: any
-// 	itemType?: string
-// 	initialOffset?: XYCoord
-// 	currentOffset?: XYCoord
-// 	isDragging?: boolean
-// 	snapToGrid: boolean
-// }
 
 const CustomDragLayer = props => {
 	const { item, itemType, isDragging } = props
 
 	function renderItem() {
 		switch (itemType) {
-			case ItemTypes.NOTE:
+			case ItemTypes.Text:
 				return <DragPreview/>
 			default:
 				return null

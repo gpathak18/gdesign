@@ -14,31 +14,9 @@ import DraggableItem from './DraggableItem'
 export const mainListItems = (
   <div>
     <ListSubheader inset>Color Options</ListSubheader>
-    <DraggableItem></DraggableItem>
-    <ListItem style={{cursor: 'move'}}>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Header" />
-    </ListItem>
-    <ListItem style={{cursor: 'move'}} >
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Image" />
-    </ListItem>
-    <ListItem style={{cursor: 'move'}}>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Splitter" />
-    </ListItem>
-    <ListItem style={{cursor: 'move'}}>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItem>
+    <DraggableItem name="Add Text" iconName="text_fields"></DraggableItem>
+    <DraggableItem name="Add Image" iconName="insert_photos"></DraggableItem>
+    <DraggableItem name="Add Image" iconName="insert_photos"></DraggableItem>
   </div>
 );
 

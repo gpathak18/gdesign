@@ -1,4 +1,4 @@
 export default {
-  NOTE: "note",
-  BOX: "box"
+  Text: "Text",
+  Image: "Image"
 };

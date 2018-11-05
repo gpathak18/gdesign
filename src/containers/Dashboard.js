@@ -20,7 +20,8 @@ import DraggableItem from './DraggableItem'
 import CenteredTabs from './CenteredTabs'
 import { DragDropContextProvider } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
-
+import CustomDragLayer from './CustomDragLayer'
+import EditorToolBar from './EditorToolBar'
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -175,11 +176,14 @@ class Dashboard extends React.Component {
             <div className={classes.appBarSpacer} />
             <CenteredTabs></CenteredTabs>
             <div className={classes.appBarSpacer} />
+            <EditorToolBar style={{ position: 'absolute', marginBottom: '10px'}} />
+            <div className={classes.appBarSpacer} />
             <div className={classes.tableContainer}>
               <AppAction></AppAction>
             </div>
           </main>
         </div>
+        <CustomDragLayer />
         </DragDropContextProvider>
       </React.Fragment>
     );
