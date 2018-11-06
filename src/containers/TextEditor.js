@@ -97,28 +97,8 @@ class TextEditor extends Component {
   constructor(props) {
     super(props);
     this.state = { text: "", isEdit: false }; // You can also pass a Quill Delta here
-    this.showEditor = this.showEditor.bind(this);
-    this.hideEditor = this.hideEditor.bind(this);
+    this.myRef = React.createRef();
   }
-
-  handleEdit() {
-    let isedit = !this.state.isEdit;
-    this.setState({ text: this.state.text, isEdit: isedit });
-    console.log(isedit);
-  }
-
-  showEditor() {
-    let isedit = true;
-    this.setState({ text: this.state.text, isEdit: isedit });
-    console.log(isedit);
-  }
-
-  hideEditor() {
-    let isedit = false;
-    this.setState({ text: this.state.text, isEdit: isedit });
-    console.log(isedit);
-  }
-
 
   render() {
     return (
@@ -128,20 +108,14 @@ class TextEditor extends Component {
             value={this.state.text}
             onChange={this.handleChange}
             style={{ width: "100%", height: "75%" }}
-            onBlur={() => console.log("focus lost")}
+            onBlur={() => console.log("focus lost",this.myRef)}
             // modules={this.modules}
             // formats={this.formats}
             // theme="snow"
             modules={TextEditor.modules}
+            ref={this.myRef}
           />
         </div>
-      // <div
-      //   style={{ width: "100%", height: "100%" }}
-      //   onMouseOver={this.showEditor}
-      //   onMouseLeave={this.hideEditor}
-      // >
-      //   {this.check()}
-      // </div>
     );
   }
 }

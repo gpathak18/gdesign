@@ -9,59 +9,97 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import ReactQuill, { Quill } from "react-quill";
+import FormatAlignLeftIcon from "@material-ui/icons/FormatAlignLeft";
+import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
+import FormatAlignRightIcon from "@material-ui/icons/FormatAlignRight";
+import FormatAlignJustifyIcon from "@material-ui/icons/FormatAlignJustify";
+import FormatBoldIcon from "@material-ui/icons/FormatBold";
+import FormatItalicIcon from "@material-ui/icons/FormatItalic";
+import FormatUnderlinedIcon from "@material-ui/icons/FormatUnderlined";
+import FormatColorFillIcon from "@material-ui/icons/FormatColorFill";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import Grid from "@material-ui/core/Grid";
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+
+let Inline = Quill.import("blots/inline");
+
+class BoldBlot extends Inline {}
+BoldBlot.blotName = "bold";
+BoldBlot.tagName = "strong";
+
+class ItalicBlot extends Inline {}
+ItalicBlot.blotName = "italic";
+ItalicBlot.tagName = "em";
+
+Quill.register(BoldBlot);
+Quill.register(ItalicBlot);
+
+const styles = theme => ({
+  toggleContainer: {
+    height: 56,
+    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: `${theme.spacing.unit}px 0`,
+    background: theme.palette.background.default
+  }
+});
 
 class EditorToolBar extends Component {
+
+  constructor(props) {
+    super(props)
+    this.formatBold = this.formatBold.bind(this)
+  }
+
+  formatBold() {
+    const node = this.myRef.current;
+    console.log('ref',node)
+    node.format('bold', true);
+  }
+
   render() {
-    const styles = {
-      root: {
-        flexGrow: 1,
-        border: 'none'
-      },
-      menuButton: {
-        marginLeft: -18,
-        marginRight: 10
-      }
-    };
-    console.log(styles.root)
+
+    const { classes } = this.props;
+
     return (
       <React.Fragment>
-        <div id="toolbar" className={styles.root}>
-          <AppBar position="static">
-            <Toolbar variant="dense">
-              <select
-                className="ql-header"
-                defaultValue={""}
-                onChange={e => e.persist()}
-              >
-                <option value="1" />
-                <option value="2" />
-              </select>
-              <IconButton color="primary" className="ql-bold">
-                <Icon>alarm</Icon>
-              </IconButton>
-              {/* <button className="ql-bold" /> */}
-              <button className="ql-italic" />
-              <select className="ql-color">
-                {/* <option value="red" />
-        <option value="green" />
-        <option value="blue" />
-        <option value="orange" />
-        <option value="violet" />
-        <option value="#d0d1d2" />
-        <option selected /> */}
-              </select>
-            </Toolbar>
-          </AppBar>
-        </div>
+        <div className={classes.toggleContainer}>
+        <ToggleButtonGroup exclusive id="toolbar">
+          <ToggleButton value="left">
+            <FormatAlignLeftIcon />
+          </ToggleButton>
+          <ToggleButton value="center">
+            <FormatAlignCenterIcon />
+          </ToggleButton>
+          <ToggleButton value="right">
+            <FormatAlignRightIcon />
+          </ToggleButton>
+          <ToggleButton value="justify" disabled>
+            <FormatAlignJustifyIcon />
+          </ToggleButton>
+          </ToggleButtonGroup>
 
-        <div>
-          {/* <button className="ql-insertStar">
-        <CustomButton />
-      </button> */}
+          <ToggleButtonGroup exclusive id="toolbar">
+
+          <ToggleButton value="left" onClick={this.formatBold}>
+            <Icon>format_bold</Icon>
+          </ToggleButton>
+          <ToggleButton value="center">
+            <Icon>format_italic</Icon>
+          </ToggleButton>
+          <ToggleButton value="right">
+            <Icon>format_color_text</Icon>
+          </ToggleButton>
+        </ToggleButtonGroup>
         </div>
+        
       </React.Fragment>
     );
   }
 }
 
-export default EditorToolBar;
+export default withStyles(styles)(EditorToolBar)
