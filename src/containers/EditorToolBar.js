@@ -8,9 +8,30 @@ import FormatAlignRightIcon from "@material-ui/icons/FormatAlignRight";
 import FormatAlignJustifyIcon from "@material-ui/icons/FormatAlignJustify";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
-import {editor} from './ToolMap'
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import HeaderBlot from "./HeaderBlot";
+import LinkBlot from "./LinkBlot";
+import ImageBlot from "./ImageBlot";
+import img from '../images/001050.jpg'
+
 
 let Inline = Quill.import("blots/inline");
+let Block = Quill.import("blots/block");
+let BlockEmbed = Quill.import("blots/block/embed");
+
+class DividerBlot extends BlockEmbed {}
+DividerBlot.blotName = "divider";
+DividerBlot.tagName = "hr";
+
+class BlockquoteBlot extends Block {}
+BlockquoteBlot.blotName = "blockquote";
+BlockquoteBlot.tagName = "blockquote";
 
 class BoldBlot extends Inline {}
 BoldBlot.blotName = "bold";
@@ -20,8 +41,22 @@ class ItalicBlot extends Inline {}
 ItalicBlot.blotName = "italic";
 ItalicBlot.tagName = "em";
 
+LinkBlot.blotName = "link";
+LinkBlot.tagName = "a";
+
+HeaderBlot.blotName = "header";
+HeaderBlot.tagName = ["H1", "H2"];
+
+ImageBlot.blotName = "image";
+ImageBlot.tagName = "img";
+
 Quill.register(BoldBlot);
 Quill.register(ItalicBlot);
+Quill.register(LinkBlot);
+Quill.register(BlockquoteBlot);
+Quill.register(HeaderBlot);
+Quill.register(DividerBlot);
+Quill.register(ImageBlot);
 
 const styles = theme => ({
   toggleContainer: {
@@ -36,56 +71,142 @@ const styles = theme => ({
 });
 
 class EditorToolBar extends Component {
-
   constructor(props) {
-    super(props)
-    this.formatBold = this.formatBold.bind(this)
+    super(props);
+    this.state = {
+      open: false
+    };
+    this.formatText = this.formatText.bind(this);
+    this.formatLink = this.formatLink.bind(this);
+    this.insertDivider = this.insertDivider.bind(this);
+    this.insertImage = this.insertImage.bind(this);
   }
 
-  formatBold() {
-    console.log('ref',window.quillRef)
-    window.quillRef.format('bold', true);
+  handleClickOpen = () => {
+    this.setState({ open: true, url: "" });
+  };
+
+  handleClose = value => {
+    console.log("value", value);
+    if (value) {
+      this.setState({ open: false, url: value });
+      this.formatLink();
+    }
+  };
+
+  formatLink() {
+    if (window.quillRef) {
+      let value = this.state.url;
+      console.log("value", value);
+      window.quillRef.format("link", value);
+    }
+  }
+
+  formatText(value, option = true) {
+    if (window.quillRef) {
+      window.quillRef.format(value, option);
+    }
+  }
+
+  insertDivider() {
+    if (window.quillRef) {
+      let range = window.quillRef.getSelection(true);
+      console.log(range);
+      window.quillRef.insertText(range.index, "\n", Quill.sources.USER);
+      window.quillRef.insertEmbed(
+        range.index + 1,
+        "divider",
+        true,
+        Quill.sources.USER
+      );
+      window.quillRef.setSelection(range.index + 2, Quill.sources.SILENT);
+    }
+  }
+
+  insertImage() {
+    let range = window.quillRef.getSelection(true);
+    window.quillRef.insertText(range.index, "\n", Quill.sources.USER);
+    window.quillRef.insertEmbed(
+      range.index + 1,
+      "image",
+      {
+        alt: "Image",
+        url: img
+      },
+      Quill.sources.USER
+    );
+    window.quillRef.setSelection(range.index + 2, Quill.sources.SILENT);
   }
 
   render() {
-
     const { classes } = this.props;
 
     return (
       <React.Fragment>
         <div className={classes.toggleContainer}>
-        <ToggleButtonGroup exclusive id="toolbar">
-          <ToggleButton value="left">
-            <FormatAlignLeftIcon />
-          </ToggleButton>
-          <ToggleButton value="center">
-            <FormatAlignCenterIcon />
-          </ToggleButton>
-          <ToggleButton value="right">
-            <FormatAlignRightIcon />
-          </ToggleButton>
-          <ToggleButton value="justify" disabled>
-            <FormatAlignJustifyIcon />
-          </ToggleButton>
+          <ToggleButtonGroup id="toolbar">
+            <ToggleButton onClick={() => this.formatText("bold")}>
+              <Icon>format_bold</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={() => this.formatText("italic")}>
+              <Icon>format_italic</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={this.handleClickOpen}>
+              <Icon>link</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={() => this.formatText("blockquote")}>
+              <Icon>format_quote</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={() => this.formatText("header", 1)}>
+              <Icon>looks_one</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={() => this.formatText("header", 2)}>
+              <Icon>looks_two</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={this.insertImage}>
+              <Icon>photo_camera</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={this.insertDivider}>
+              <Icon>remove</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={() => this.formatText("indent", -1)}>
+              <Icon>format_indent_decrease</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={() => this.formatText("indent", +1)}>
+              <Icon>format_indent_increase</Icon>
+            </ToggleButton>
           </ToggleButtonGroup>
-
-          <ToggleButtonGroup exclusive id="toolbar">
-
-          <ToggleButton value="left" onClick={this.formatBold}>
-            <Icon>format_bold</Icon>
-          </ToggleButton>
-          <ToggleButton value="center">
-            <Icon>format_italic</Icon>
-          </ToggleButton>
-          <ToggleButton value="right">
-            <Icon>format_color_text</Icon>
-          </ToggleButton>
-        </ToggleButtonGroup>
+          
         </div>
         
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Enter link URL</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="url"
+              label="Link URL"
+              fullWidth
+              onKeyUp={this.handleInput}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={this.handleClose} color="primary">
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>
       </React.Fragment>
     );
   }
 }
 
-export default withStyles(styles)(EditorToolBar)
+export default withStyles(styles)(EditorToolBar);

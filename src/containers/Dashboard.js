@@ -23,6 +23,7 @@ import HTML5Backend from "react-dnd-html5-backend";
 import CustomDragLayer from "./CustomDragLayer";
 import EditorToolBar from "./EditorToolBar";
 import store from "./store";
+import {setTitle} from './actions'
 import { connect } from "react-redux";
 
 const drawerWidth = 240;
@@ -57,18 +58,16 @@ const styles = theme => ({
 });
 
 class Dashboard extends React.Component {
-  state = {
-    open: true
-  };
 
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
+  constructor(props) {
+    super(props)
+    this.updateTitle = this.updateTitle.bind(this)
+  }
 
-  handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
-
+  updateTitle() {
+    store.dispatch(setTitle({name: 'Another'}));
+  }
+  
   render() {
     const { classes } = this.props;
 
@@ -80,8 +79,8 @@ class Dashboard extends React.Component {
             <CssBaseline />
             <AppBar position="fixed" className={classes.appBar}>
               <Toolbar variant="dense">
-                <Typography variant="h6" color="inherit" noWrap>
-                  Clipped drawer
+                <Typography variant="h6" color="inherit" noWrap onDoubleClick={this.updateTitle}>
+                  {this.props.state.name}
                 </Typography>
               </Toolbar>
               <Divider />

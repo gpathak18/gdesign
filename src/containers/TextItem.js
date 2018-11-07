@@ -22,6 +22,7 @@ class TextItem extends Component {
   }
 
   editorCallback = (text) => {
+    console.log(text)
     let isedit = false;
     this.setState({ text: text, isEdit: isedit });
     this.editor();

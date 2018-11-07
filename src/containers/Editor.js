@@ -40,8 +40,8 @@ class Editor extends Component {
         <div style={{display: "flex", justifyContent: "center", width: "100%",height: "100%" }}>
           <div style={{ width: "800px",  height: "100%"}} >
                 <HeaderEditor state={this.props.state}></HeaderEditor>
-                <BodyEditor></BodyEditor>
-                <FooterEditor></FooterEditor>
+                <BodyEditor state={this.props.state}></BodyEditor>
+                <FooterEditor state={this.props.state}></FooterEditor>
           </div>
         </div>
       </React.Fragment>

@@ -15,8 +15,8 @@ import EditorToolBar from "./EditorToolBar";
 export const mainListItems = (
   <div>
     <ListSubheader component="div">Contents</ListSubheader>
-    <DraggableItem name="Text" type="text" iconName="text_fields" />
-    <DraggableItem name="Image" type="image" iconName="insert_photos" />
+    <DraggableItem name="Text" type="Text" iconName="text_fields" />
+    <DraggableItem name="Image" type="Image" iconName="insert_photos" />
     <DraggableItem name="Image Group" type="imagegroup" iconName="collections" />
     <DraggableItem name="Divider" type="divider" iconName="horizontal_split" />
     <DraggableItem name="Button" type="button" iconName="crop_landscape" />
@@ -28,6 +28,5 @@ export const mainListItems = (
 export const secondaryListItems = (
   <div>
     <ListSubheader component="div">Style</ListSubheader>
-
   </div>
 );

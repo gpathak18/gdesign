@@ -1,6 +1,7 @@
 import { ADD_ROW, ADD_COLUMN } from "../actions";
 import _ from "lodash";
 const initialState = {
+  name: "Untitled",
   seq: 0,
   header: {
     type: "header",
@@ -127,15 +128,15 @@ function reducer(state = initialState, action) {
       };
       return Object.assign({}, state, selNode);
     case "ADD_ITEM":
-      let sequence =  state.seq + 1
-     
-      let row = {} 
+      let sequence = state.seq + 1;
 
-      row[sequence] = action.payload.item
+      let row = {};
 
-      let child = [...state.header.child,sequence]
+      row[sequence] = action.payload.item;
 
-      let obj =  {
+      let child = [...state.header.child, sequence];
+
+      let obj = {
         ...state,
         header: Object.assign({}, state.header, {
           type: "header",
@@ -143,13 +144,15 @@ function reducer(state = initialState, action) {
           child: child
         }),
         ...row,
-        seq : sequence
+        seq: sequence
       };
 
-      console.log('state after',obj)
+      console.log("state after", obj);
 
       return obj;
-
+    case "SET_TITLE":
+      let name = action.payload.name
+      return Object.assign({}, state, name);
     default:
       return state;
   }

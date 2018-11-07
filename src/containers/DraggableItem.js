@@ -60,7 +60,7 @@ class DraggableItem extends Component {
     } = this.props;
     const opacity = isDragging ? 0.4 : 1;
     const dropEffect = showCopyIcon ? "copy" : "move";
-
+    
     return connectDragSource(
       <div>
         <ListItem type={type} style={{ opacity, cursor: "move" }}>
@@ -75,4 +75,4 @@ class DraggableItem extends Component {
   }
 }
 export const MatStyle = withStyles(styles);
-export default DragSource(ItemTypes.Text, itemSource, collect)(DraggableItem);
+export default DragSource((props) => props.type, itemSource, collect)(DraggableItem);

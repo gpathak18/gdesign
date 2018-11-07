@@ -64,10 +64,11 @@ class TextEditor extends Component {
 
   handleChange(value) {
     this.setState({ text: value });
-    console.log(value);
+    console.log(this.state.text);
   }
 
   handleOnBlur() {
+    this.setState({ text: this.state.text });
     this.props.editorOnBlur(this.state.text);
   }
 
@@ -80,7 +81,7 @@ class TextEditor extends Component {
           this.reactQuillRef = el;
         }}
         theme=''
-        style={{background: 'white'}}
+        style={{background: 'white', padding: 0}}
         onChange={this.handleChange}
         onBlur={this.handleOnBlur}
         defaultValue = {this.props.defaultText}
