@@ -1,16 +1,10 @@
 import React, { Component } from "react";
 import ItemTypes from "./ItemTypes";
 import { DragSource } from "react-dnd";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import TextFieldIcon from "@material-ui/icons/TextFields";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import Avatar from "@material-ui/core/Avatar";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import Icon from '@material-ui/core/Icon';
 
@@ -61,6 +55,7 @@ class DraggableItem extends Component {
       connectDragSource,
       name,
       iconName,
+      type,
       showCopyIcon
     } = this.props;
     const opacity = isDragging ? 0.4 : 1;
@@ -68,7 +63,7 @@ class DraggableItem extends Component {
 
     return connectDragSource(
       <div>
-        <ListItem style={{ opacity, cursor: "move" }}>
+        <ListItem type={type} style={{ opacity, cursor: "move" }}>
           <ListItemIcon>
             <Icon>{iconName}</Icon>
           </ListItemIcon>

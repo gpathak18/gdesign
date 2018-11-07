@@ -15,13 +15,13 @@ import EditorToolBar from "./EditorToolBar";
 export const mainListItems = (
   <div>
     <ListSubheader component="div">Contents</ListSubheader>
-    <DraggableItem name="Text" iconName="text_fields" />
-    <DraggableItem name="Image" iconName="insert_photos" />
-    <DraggableItem name="Image Group" iconName="collections" />
-    <DraggableItem name="Divider" iconName="horizontal_split" />
-    <DraggableItem name="Button" iconName="crop_landscape" />
-    <DraggableItem name="Icons" iconName="insert_emoticon" />
-    <DraggableItem name="Video" iconName="videocam" />
+    <DraggableItem name="Text" type="text" iconName="text_fields" />
+    <DraggableItem name="Image" type="image" iconName="insert_photos" />
+    <DraggableItem name="Image Group" type="imagegroup" iconName="collections" />
+    <DraggableItem name="Divider" type="divider" iconName="horizontal_split" />
+    <DraggableItem name="Button" type="button" iconName="crop_landscape" />
+    <DraggableItem name="Icons" type="icons" iconName="insert_emoticon" />
+    <DraggableItem name="Video" type="video" iconName="videocam" />
   </div>
 );
 

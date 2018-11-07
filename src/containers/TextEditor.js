@@ -1,25 +1,7 @@
 import React, { Component } from "react";
-import { DragDropContextProvider } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
-import CustomDragLayer from "./CustomDragLayer";
-import Row from "./Row";
-import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core/styles";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import store from "./store";
-import HeaderEditor from "./HeaderEditor";
-import { adjustHeight } from "./actions";
 import ReactQuill, { Quill } from "react-quill";
-import { Columns, Cell, Splitter } from "react-resizable-grid";
 import IndentAttributor from "./IndentAttributor";
-import DraggableItem from "./DraggableItem";
-import FooterEditor from "./FooterEditor";
-import BodyEditor from "./BodyEditor";
-import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-import EditorToolBar from './EditorToolBar'
+
 var Parchment = Quill.import("parchment");
 const levels = [1, 2, 3, 4, 5];
 const multiplier = 2;
@@ -56,90 +38,42 @@ Quill.register(IndentStyle);
 // Quill.register(LinkStyle, true);
 // Quill.register(CodeStyle, true);
 
-
-
 class TextEditor extends Component {
-  modules = {
-    toolbar: [
-      ["bold", "italic", "underline", "strike"], // toggled buttons
-      ["blockquote", "code-block"],
-      [{ header: 1 }, { header: 2 }], // custom button values
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ script: "sub" }, { script: "super" }], // superscript/subscript
-      [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-      [{ direction: "rtl" }], // text direction
-      [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-      [{ font: [] }],
-      [{ align: [] }],
-      ["clean"]
-    ]
-  };
-
-  formats = [
-    "header",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "color",
-    "align",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "font"
-  ];
-
   constructor(props) {
     super(props);
-    this.state = { text: "", isEdit: false }; // You can also pass a Quill Delta here
-    this.myRef = React.createRef();
+    this.quillRef = null; // Quill instance
+    this.reactQuillRef = null; // ReactQuill component
+  }
+
+  componentDidMount() {
+    this.attachQuillRefs();
+  }
+
+  componentDidUpdate() {
+    this.attachQuillRefs();
+  }
+
+  attachQuillRefs = () => {
+    if (typeof this.reactQuillRef.getEditor !== "function") return;
+    this.quillRef = this.reactQuillRef.getEditor();
+    window.quillRef = this.quillRef;
+  };
+
+  handleChange(value) {
+    this.setState({ text: value });
+    console.log(value);
   }
 
   render() {
     return (
-      <div className="text-editor">
-
-          <ReactQuill
-            value={this.state.text}
-            onChange={this.handleChange}
-            style={{ width: "100%", height: "75%" }}
-            onBlur={() => console.log("focus lost",this.myRef)}
-            // modules={this.modules}
-            // formats={this.formats}
-            // theme="snow"
-            modules={TextEditor.modules}
-            ref={this.myRef}
-          />
-        </div>
+      <ReactQuill
+        ref={el => {
+          this.reactQuillRef = el;
+        }}
+        theme=''
+      />
     );
   }
 }
-
-TextEditor.modules = {
-  toolbar: {
-    container: "#toolbar",
-    
-    // handlers: {
-    //   "insertStar": insertStar,
-    // }
-  }
-}
-
-/*
- * Quill editor formats
- * See http://quilljs.com/docs/formats/
- */
-TextEditor.formats = [
-  'header', 'font', 'size',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
-  'link', 'image', 'color',
-]
-
 
 export default TextEditor;

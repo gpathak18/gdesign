@@ -15,13 +15,15 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
-import AppAction from "./AppAction";
+import Editor from "./Editor";
 import DraggableItem from "./DraggableItem";
 import CenteredTabs from "./CenteredTabs";
 import { DragDropContextProvider } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import CustomDragLayer from "./CustomDragLayer";
 import EditorToolBar from "./EditorToolBar";
+import store from "./store";
+import { connect } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -30,7 +32,7 @@ const styles = theme => ({
     display: "flex"
   },
   appBar: {
-    // width: `calc(100% - ${drawerWidth}px)`,
+    width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
     background: '#F0F1F4',
     color: 'black',
@@ -84,7 +86,6 @@ class Dashboard extends React.Component {
               </Toolbar>
               <Divider />
             </AppBar>
-
             <Drawer
               className={classes.drawer}
               variant="permanent"
@@ -105,13 +106,13 @@ class Dashboard extends React.Component {
             <main className={classes.content}>
               <div className={classes.appBarSpacer} />
               {/* <CenteredTabs /> */}
-              {/* <div className={classes.appBarSpacer} /> */}
               <EditorToolBar/>
               {/* <Divider /> */}
               {/* <div className={classes.appBarSpacer} /> */}
-              <div>
-                <AppAction />
-              </div>
+              {/* <div> */}
+              <Editor state={this.props.state}/>
+                {/* <AppAction /> */}
+              {/* </div> */}
             </main>
           </div>
           <CustomDragLayer />
@@ -125,4 +126,10 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Dashboard);
+function mapStateToProps(state) {
+  return {
+    state: state
+  };
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Dashboard));

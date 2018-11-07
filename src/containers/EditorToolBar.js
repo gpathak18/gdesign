@@ -1,27 +1,14 @@
 import Icon from "@material-ui/core/Icon";
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import ReactQuill, { Quill } from "react-quill";
 import FormatAlignLeftIcon from "@material-ui/icons/FormatAlignLeft";
 import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
 import FormatAlignRightIcon from "@material-ui/icons/FormatAlignRight";
 import FormatAlignJustifyIcon from "@material-ui/icons/FormatAlignJustify";
-import FormatBoldIcon from "@material-ui/icons/FormatBold";
-import FormatItalicIcon from "@material-ui/icons/FormatItalic";
-import FormatUnderlinedIcon from "@material-ui/icons/FormatUnderlined";
-import FormatColorFillIcon from "@material-ui/icons/FormatColorFill";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import Grid from "@material-ui/core/Grid";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import {editor} from './ToolMap'
 
 let Inline = Quill.import("blots/inline");
 
@@ -56,9 +43,8 @@ class EditorToolBar extends Component {
   }
 
   formatBold() {
-    const node = this.myRef.current;
-    console.log('ref',node)
-    node.format('bold', true);
+    console.log('ref',window.quillRef)
+    window.quillRef.format('bold', true);
   }
 
   render() {

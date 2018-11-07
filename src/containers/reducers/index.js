@@ -2,39 +2,24 @@ import { ADD_ROW, ADD_COLUMN } from "../actions";
 import _ from "lodash";
 const initialState = {
   seq: 0,
-  selectedNode: "root",
-  root: {
-    type: "row",
-    child: []
-  },
   header: {
-    type: "row",
-    style: {
-      height: "20%",
-    },
+    type: "header",
+    text: "Drop an item.",
     child: []
   },
   body: {
     type: "row",
+    text: "",
     style: {
-      height: "60%",
-      background: 'grey'
+      height: "60%"
     },
     child: []
   },
   footer: {
     type: "row",
+    text: "",
     style: {
-      height: "20%",
-      background: 'pink'
-    },
-    child: []
-  },
-  1: {
-    type: "row",
-    style: {
-      height: "20%",
-      background: 'grey'
+      height: "20%"
     },
     child: []
   }
@@ -141,18 +126,30 @@ function reducer(state = initialState, action) {
         selectedNode: action.payload
       };
       return Object.assign({}, state, selNode);
-    case "ADJUST_ROW":
-     state.header = {
-        type: "row",
-        style: {
-           border: '2px dotted black',
-           height: '20%'
-        },
-        child: []
-      }
-      let obj = Object.assign({}, state);
-      console.log(obj)
+    case "ADD_ITEM":
+      let sequence =  state.seq + 1
+     
+      let row = {} 
+
+      row[sequence] = action.payload.item
+
+      let child = [...state.header.child,sequence]
+
+      let obj =  {
+        ...state,
+        header: Object.assign({}, state.header, {
+          type: "header",
+          text: "",
+          child: child
+        }),
+        ...row,
+        seq : sequence
+      };
+
+      console.log('state after',obj)
+
       return obj;
+
     default:
       return state;
   }

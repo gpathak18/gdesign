@@ -16,6 +16,8 @@ class AppAction extends Component {
   };
 
   render() {
+    console.log('header', this.props.state)
+
     return (
       <React.Fragment>
         {/* <AppMenuBar

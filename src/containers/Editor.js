@@ -35,12 +35,11 @@ class Editor extends Component {
   }
 
   render() {
-    
     return (
       <React.Fragment>
         <div style={{display: "flex", justifyContent: "center", width: "100%",height: "100%" }}>
           <div style={{ width: "800px",  height: "100%"}} >
-                <HeaderEditor></HeaderEditor>
+                <HeaderEditor state={this.props.state}></HeaderEditor>
                 <BodyEditor></BodyEditor>
                 <FooterEditor></FooterEditor>
           </div>
