@@ -18,15 +18,19 @@ class TextItem extends Component {
   }
 
   hideEditor() {
-    let isedit = false;
-    this.setState({ text: this.state.text, isEdit: isedit });
-    console.log(isedit);
+  
   }
 
+  editorCallback = (text) => {
+    let isedit = false;
+    this.setState({ text: text, isEdit: isedit });
+    this.editor();
+    console.log(isedit);
+  };
   
   editor() {
     if (this.state.isEdit) {
-      return <TextEditor onChange={this.handleChange} value={this.state.text}></TextEditor>;
+      return <TextEditor onChange={this.handleChange} value={this.state.text}  editorOnBlur={this.editorCallback} defaultText={this.state.text}></TextEditor>;
     } else {
       return <div dangerouslySetInnerHTML={{ __html: this.state.text }} />;
     }

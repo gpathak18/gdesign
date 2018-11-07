@@ -43,6 +43,9 @@ class TextEditor extends Component {
     super(props);
     this.quillRef = null; // Quill instance
     this.reactQuillRef = null; // ReactQuill component
+    this.state = { text: 'Double click to edit' }; 
+    this.handleOnBlur = this.handleOnBlur.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -64,13 +67,23 @@ class TextEditor extends Component {
     console.log(value);
   }
 
+  handleOnBlur() {
+    this.props.editorOnBlur(this.state.text);
+  }
+
   render() {
+
+    
     return (
       <ReactQuill
         ref={el => {
           this.reactQuillRef = el;
         }}
         theme=''
+        style={{background: 'white'}}
+        onChange={this.handleChange}
+        onBlur={this.handleOnBlur}
+        defaultValue = {this.props.defaultText}
       />
     );
   }
