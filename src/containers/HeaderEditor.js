@@ -59,6 +59,11 @@ function collect(connect, monitor) {
 class HeaderEditor extends React.Component {
   constructor(props) {
     super(props);
+    this.onHoverUpdate = this.onHoverUpdate.bind(this);
+  }
+
+  onHoverUpdate() {
+    
   }
 
   renderTree(root) {
@@ -109,12 +114,23 @@ class HeaderEditor extends React.Component {
     return (
       connectDropTarget &&
       connectDropTarget(
-        <div style={{ ...style, backgroundColor, boxShadow, border }}>
+        <div style={{ ...this.props.state.header.style, backgroundColor, boxShadow, border }} onMouseOver={this.onHoverUpdate}>
           {this.renderTree(this.props.state.header)}
         </div>
       )
     );
   }
+
+  findCard(id) {
+		const { cards } = this.state
+		const card = cards.filter(c => c.id === id)[0]
+
+		return {
+			card,
+			index: cards.indexOf(card),
+		}
+  }
+  
 }
 
 export default DropTarget(

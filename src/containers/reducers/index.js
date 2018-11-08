@@ -1,12 +1,17 @@
 import { ADD_ROW, ADD_COLUMN } from "../actions";
 import _ from "lodash";
 const initialState = {
-  name: "Untitled",
+  name: "Untitled Template",
   seq: 0,
   header: {
     type: "header",
     text: "Drop an item.",
-    child: []
+    child: [],
+    style: {
+      padding: "1rem",
+      borderRadius: "2px",
+      overflow: "auto"
+    }
   },
   body: {
     type: "row",

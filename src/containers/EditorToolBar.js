@@ -18,8 +18,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import HeaderBlot from "./HeaderBlot";
 import LinkBlot from "./LinkBlot";
 import ImageBlot from "./ImageBlot";
-import img from '../images/001050.jpg'
-
+import img from "../images/001050.jpg";
+import ColorPicker from "./ColorPicker";
 
 let Inline = Quill.import("blots/inline");
 let Block = Quill.import("blots/block");
@@ -103,7 +103,9 @@ class EditorToolBar extends Component {
   }
 
   formatText(value, option = true) {
+    console.log(value, option);
     if (window.quillRef) {
+      console.log(value, option);
       window.quillRef.format(value, option);
     }
   }
@@ -151,23 +153,8 @@ class EditorToolBar extends Component {
             <ToggleButton onClick={() => this.formatText("italic")}>
               <Icon>format_italic</Icon>
             </ToggleButton>
-            <ToggleButton onClick={this.handleClickOpen}>
-              <Icon>link</Icon>
-            </ToggleButton>
-            <ToggleButton onClick={() => this.formatText("blockquote")}>
-              <Icon>format_quote</Icon>
-            </ToggleButton>
-            <ToggleButton onClick={() => this.formatText("header", 1)}>
-              <Icon>looks_one</Icon>
-            </ToggleButton>
-            <ToggleButton onClick={() => this.formatText("header", 2)}>
-              <Icon>looks_two</Icon>
-            </ToggleButton>
-            <ToggleButton onClick={this.insertImage}>
-              <Icon>photo_camera</Icon>
-            </ToggleButton>
-            <ToggleButton onClick={this.insertDivider}>
-              <Icon>remove</Icon>
+            <ToggleButton onClick={() => this.formatText("underline")}>
+              <Icon>format_underlined</Icon>
             </ToggleButton>
             <ToggleButton onClick={() => this.formatText("indent", -1)}>
               <Icon>format_indent_decrease</Icon>
@@ -175,10 +162,39 @@ class EditorToolBar extends Component {
             <ToggleButton onClick={() => this.formatText("indent", +1)}>
               <Icon>format_indent_increase</Icon>
             </ToggleButton>
+            <ToggleButton onClick={() => this.formatText("header", 1)}>
+              <Icon>looks_one</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={() => this.formatText("header", 2)}>
+              <Icon>looks_two</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={this.handleClickOpen}>
+              <Icon>link</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={() => this.formatText("blockquote")}>
+              <Icon>format_quote</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={this.insertImage}>
+              <Icon>photo_camera</Icon>
+            </ToggleButton>
+            <ToggleButton onClick={this.insertDivider}>
+              <Icon>remove</Icon>
+            </ToggleButton>
+            <div>
+              <ColorPicker
+                colorType="format_color_text"
+                formatTextCallback={this.formatText}
+                type="color"
+              />
+              <ColorPicker
+                colorType="format_color_fill"
+                formatTextCallback={this.formatText}
+                type="background"
+              />
+            </div>
           </ToggleButtonGroup>
-          
         </div>
-        
+
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}

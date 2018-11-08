@@ -23,10 +23,10 @@ import HTML5Backend from "react-dnd-html5-backend";
 import CustomDragLayer from "./CustomDragLayer";
 import EditorToolBar from "./EditorToolBar";
 import store from "./store";
-import {setTitle} from './actions'
+import { setTitle } from "./actions";
 import { connect } from "react-redux";
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const styles = theme => ({
   root: {
@@ -35,9 +35,9 @@ const styles = theme => ({
   appBar: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    background: '#F0F1F4',
-    color: 'black',
-    boxShadow: '0 0 white'
+    background: "#F0F1F4",
+    color: "black",
+    boxShadow: "0 0 white"
   },
   drawer: {
     width: drawerWidth,
@@ -45,8 +45,8 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    background: '#F0F1F4',
-    color: 'DARKGRAY'
+    background: "#F0F1F4",
+    color: "DARKGRAY"
   },
   content: {
     flexGrow: 1,
@@ -58,16 +58,15 @@ const styles = theme => ({
 });
 
 class Dashboard extends React.Component {
-
   constructor(props) {
-    super(props)
-    this.updateTitle = this.updateTitle.bind(this)
+    super(props);
+    this.updateTitle = this.updateTitle.bind(this);
   }
 
   updateTitle() {
-    store.dispatch(setTitle({name: 'Another'}));
+    store.dispatch(setTitle({ name: "Another" }));
   }
-  
+
   render() {
     const { classes } = this.props;
 
@@ -78,11 +77,7 @@ class Dashboard extends React.Component {
           <div className={classes.root}>
             <CssBaseline />
             <AppBar position="fixed" className={classes.appBar}>
-              <Toolbar variant="dense">
-                <Typography variant="h6" color="inherit" noWrap onDoubleClick={this.updateTitle}>
-                  {this.props.state.name}
-                </Typography>
-              </Toolbar>
+              <Toolbar variant="dense" />
               <Divider />
             </AppBar>
             <Drawer
@@ -93,9 +88,19 @@ class Dashboard extends React.Component {
               }}
             >
               <div className={classes.toolbarIcon}>
-                <IconButton onClick={this.handleDrawerClose}>
-                  <ChevronLeftIcon />
-                </IconButton>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                  <IconButton onClick={this.handleDrawerClose}>
+                    <ChevronLeftIcon />
+                  </IconButton>
+                  <Typography
+                    variant="h6"
+                    color="inherit"
+                    noWrap
+                    onDoubleClick={this.updateTitle}
+                  >
+                    {this.props.state.name}
+                  </Typography>
+                </div>
               </div>
               <Divider />
               <List>{mainListItems}</List>
@@ -105,12 +110,12 @@ class Dashboard extends React.Component {
             <main className={classes.content}>
               <div className={classes.appBarSpacer} />
               {/* <CenteredTabs /> */}
-              <EditorToolBar/>
+              <EditorToolBar />
               {/* <Divider /> */}
               {/* <div className={classes.appBarSpacer} /> */}
               {/* <div> */}
-              <Editor state={this.props.state}/>
-                {/* <AppAction /> */}
+              <Editor state={this.props.state} />
+              {/* <AppAction /> */}
               {/* </div> */}
             </main>
           </div>

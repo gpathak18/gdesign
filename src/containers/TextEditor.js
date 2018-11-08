@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import IndentAttributor from "./IndentAttributor";
+import editorStyle from "./editor.css";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 var Parchment = Quill.import("parchment");
 const levels = [1, 2, 3, 4, 5];
@@ -38,12 +42,27 @@ Quill.register(IndentStyle);
 // Quill.register(LinkStyle, true);
 // Quill.register(CodeStyle, true);
 
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
+  fab: {
+    position: 'relative',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+  }
+});
+
+
 class TextEditor extends Component {
   constructor(props) {
     super(props);
     this.quillRef = null; // Quill instance
     this.reactQuillRef = null; // ReactQuill component
-    this.state = { text: 'Double click to edit' }; 
+    this.state = { text: "Double click to edit" };
     this.handleOnBlur = this.handleOnBlur.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -73,21 +92,30 @@ class TextEditor extends Component {
   }
 
   render() {
-
-    
+    const { classes } = this.props;
     return (
-      <ReactQuill
-        ref={el => {
-          this.reactQuillRef = el;
-        }}
-        theme=''
-        style={{background: 'white', padding: 0}}
-        onChange={this.handleChange}
-        onBlur={this.handleOnBlur}
-        defaultValue = {this.props.defaultText}
-      />
+      <div>
+        <ReactQuill
+          ref={el => {
+            this.reactQuillRef = el;
+          }}
+          theme=""
+          style={{ background: "white", padding: "0px" }}
+          onChange={this.handleChange}
+         
+          defaultValue={this.props.defaultText}
+        />
+        <Button variant="fab" mini color="secondary" aria-label="Add" className={classes.fab} onClick={this.handleOnBlur}>
+          +
+        </Button>
+      </div>
     );
   }
 }
 
-export default TextEditor;
+TextEditor.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+
+export default withStyles(styles)(TextEditor);
