@@ -1,11 +1,7 @@
 import Icon from "@material-ui/core/Icon";
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import ReactQuill, { Quill } from "react-quill";
-import FormatAlignLeftIcon from "@material-ui/icons/FormatAlignLeft";
-import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
-import FormatAlignRightIcon from "@material-ui/icons/FormatAlignRight";
-import FormatAlignJustifyIcon from "@material-ui/icons/FormatAlignJustify";
+import { Quill } from "react-quill";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import Button from "@material-ui/core/Button";
@@ -13,7 +9,6 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import HeaderBlot from "./HeaderBlot";
 import LinkBlot from "./LinkBlot";
@@ -71,6 +66,9 @@ const styles = theme => ({
 });
 
 class EditorToolBar extends Component {
+
+  indentCounter = 0;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -156,10 +154,10 @@ class EditorToolBar extends Component {
             <ToggleButton onClick={() => this.formatText("underline")}>
               <Icon>format_underlined</Icon>
             </ToggleButton>
-            <ToggleButton onClick={() => this.formatText("indent", -1)}>
+            <ToggleButton onClick={() => this.formatText("indent", --this.indentCounter)}>
               <Icon>format_indent_decrease</Icon>
             </ToggleButton>
-            <ToggleButton onClick={() => this.formatText("indent", +1)}>
+            <ToggleButton onClick={() => this.formatText("indent", ++this.indentCounter)}>
               <Icon>format_indent_increase</Icon>
             </ToggleButton>
             <ToggleButton onClick={() => this.formatText("header", 1)}>
@@ -191,6 +189,18 @@ class EditorToolBar extends Component {
                 formatTextCallback={this.formatText}
                 type="background"
               />
+              <ToggleButton onClick={() => this.formatText("align","")}>
+                <Icon>format_align_left</Icon>
+              </ToggleButton>
+              <ToggleButton onClick={() => this.formatText("align","center")}>
+                <Icon>format_align_center</Icon>
+              </ToggleButton>
+              <ToggleButton onClick={() => this.formatText("align","right")}>
+                <Icon>format_align_right</Icon>
+              </ToggleButton>
+              <ToggleButton onClick={() => this.formatText("align","justify")}>
+                <Icon>format_align_justify</Icon>
+              </ToggleButton>
             </div>
           </ToggleButtonGroup>
         </div>

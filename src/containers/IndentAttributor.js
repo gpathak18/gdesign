@@ -1,17 +1,21 @@
 
-import { Quill } from 'react-quill';
-var Parchment = Quill.import("parchment")
-const levels = [1, 2, 3, 4, 5];
-const multiplier = 2;
+import Quill from 'quill'
+const Parchment = Quill.import('parchment')
 
 class IndentAttributor extends Parchment.Attributor.Style {
-	add(node, value) {
-		return super.add(node, `${value * multiplier}em`);
-	}
-
-	value(node) {
-		return parseFloat(super.value(node)) / multiplier || undefined; // Don't return NaN
-	}
+  add (node, value) {
+    if (value === 0) {
+      this.remove(node)
+      return true
+    } else {
+      return super.add(node, `${value}em`)
+    }
+  }
 }
 
-export default IndentAttributor
+let IndentStyle = new IndentAttributor('indent', 'text-indent', {
+  scope: Parchment.Scope.BLOCK,
+  whitelist: ['1em', '2em', '3em', '4em', '5em', '6em', '7em', '8em', '9em','10em','11em', '12em', '13em', '14em', '15em', '16em', '17em', '18em', '19em','20em']
+})
+
+export { IndentStyle }

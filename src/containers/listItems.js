@@ -37,7 +37,7 @@ export const secondaryListItems = (
   <div>
     <ListSubheader component="div">Alignement</ListSubheader>
     <ListItem style={{ cursor: "pointer" }}>
-      <ToggleButtonGroup id="toolbar">
+      <ToggleButtonGroup >
         <ToggleButton>
           <Icon>format_align_left</Icon>
         </ToggleButton>
