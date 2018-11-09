@@ -33,7 +33,7 @@ class TextItem extends Component {
     if (this.state.isEdit) {
       return <TextEditor onChange={this.handleChange} value={this.state.text}  editorOnBlur={this.editorCallback} defaultText={this.state.text}></TextEditor>;
     } else {
-      return <div dangerouslySetInnerHTML={{ __html: this.state.text }} />;
+      return <div style={{ padding: '12px 15px' }} dangerouslySetInnerHTML={{ __html: this.state.text }} />;
     }
   }
 

@@ -13,8 +13,17 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import HeaderBlot from "./HeaderBlot";
 import LinkBlot from "./LinkBlot";
 import ImageBlot from "./ImageBlot";
-import img from "../images/001050.jpg";
 import ColorPicker from "./ColorPicker";
+import { IndentStyle } from "./IndentAttributor";
+import { FontAttr } from "./FontFamilyAttributor";
+import img from "../images/001050.jpg";
+import FontFamilyPicker from "./FontFamilyPicker";
+import FontSizePicker from "./FontSizePicker";
+
+
+// let FontStyle = Quill.import('attributors/style/font');
+// FontStyle.whitelist =[false, 'Arial, Helvetica, sans-serif', 'Georgia, serif', 'Impact, Charcoal, sans-serif', 'Tahoma, Geneva, sans-serif', 'Times New Roman, Times, serif, -webkit-standard', 'Verdana, Geneva, sans-serif'];
+// Quill.register(FontStyle, true);
 
 let Inline = Quill.import("blots/inline");
 let Block = Quill.import("blots/block");
@@ -45,6 +54,10 @@ HeaderBlot.tagName = ["H1", "H2"];
 ImageBlot.blotName = "image";
 ImageBlot.tagName = "img";
 
+// var Font = Quill.import("attributors/class/font");
+// We do not add Aref Ruqaa since it is the default
+// Font.whitelist = ["Oxygen", "Roboto"];
+
 Quill.register(BoldBlot);
 Quill.register(ItalicBlot);
 Quill.register(LinkBlot);
@@ -52,6 +65,35 @@ Quill.register(BlockquoteBlot);
 Quill.register(HeaderBlot);
 Quill.register(DividerBlot);
 Quill.register(ImageBlot);
+
+// const BackgroundStyle = Quill.import("attributors/style/background");
+const ColorStyle = Quill.import("attributors/style/color");
+const AlignStyle = Quill.import("attributors/style/align");
+const SizeStyle = Quill.import("attributors/style/size");
+// const FontStyle = Quill.import("attributors/style/font");
+// const BoldStyle = Quill.import('attributors/style/bold');
+// const ItalicStyle = Quill.import('attributors/style/italic');
+// const StrikethroughStyle = Quill.import('attributors/style/strike');
+// const ScriptStyle = Quill.import('attributors/style/script');
+// const UnderlineStyle = Quill.import('attributors/style/underline');
+// const LinkStyle = Quill.import('attributors/style/link');
+// const CodeStyle = Quill.import('attributors/style/code');
+
+// Quill.register(BackgroundStyle, true);
+Quill.register(ColorStyle, true);
+Quill.register(SizeStyle, true);
+Quill.register(FontAttr, true);
+Quill.register(IndentStyle, true);
+Quill.register(AlignStyle, true);
+// Quill.register(FontAttributor);
+// Quill.register(BoldStyle);
+// Quill.register(ItalicStyle, true);
+// Quill.register(StrikethroughStyle, true);
+// Quill.register(ScriptStyle, true);
+// Quill.register(ItalicStyle, true);
+// Quill.register(UnderlineStyle, true);
+// Quill.register(LinkStyle);
+// Quill.register(CodeStyle, true);
 
 const styles = theme => ({
   toggleContainer: {
@@ -66,7 +108,6 @@ const styles = theme => ({
 });
 
 class EditorToolBar extends Component {
-
   indentCounter = 0;
 
   constructor(props) {
@@ -154,10 +195,14 @@ class EditorToolBar extends Component {
             <ToggleButton onClick={() => this.formatText("underline")}>
               <Icon>format_underlined</Icon>
             </ToggleButton>
-            <ToggleButton onClick={() => this.formatText("indent", --this.indentCounter)}>
+            <ToggleButton
+              onClick={() => this.formatText("indent", --this.indentCounter)}
+            >
               <Icon>format_indent_decrease</Icon>
             </ToggleButton>
-            <ToggleButton onClick={() => this.formatText("indent", ++this.indentCounter)}>
+            <ToggleButton
+              onClick={() => this.formatText("indent", ++this.indentCounter)}
+            >
               <Icon>format_indent_increase</Icon>
             </ToggleButton>
             <ToggleButton onClick={() => this.formatText("header", 1)}>
@@ -166,12 +211,13 @@ class EditorToolBar extends Component {
             <ToggleButton onClick={() => this.formatText("header", 2)}>
               <Icon>looks_two</Icon>
             </ToggleButton>
-            <ToggleButton onClick={this.handleClickOpen}>
-              <Icon>link</Icon>
-            </ToggleButton>
             <ToggleButton onClick={() => this.formatText("blockquote")}>
               <Icon>format_quote</Icon>
             </ToggleButton>
+            <ToggleButton onClick={this.handleClickOpen}>
+              <Icon>link</Icon>
+            </ToggleButton>
+
             <ToggleButton onClick={this.insertImage}>
               <Icon>photo_camera</Icon>
             </ToggleButton>
@@ -189,18 +235,20 @@ class EditorToolBar extends Component {
                 formatTextCallback={this.formatText}
                 type="background"
               />
-              <ToggleButton onClick={() => this.formatText("align","")}>
+              <ToggleButton onClick={() => this.formatText("align", "")}>
                 <Icon>format_align_left</Icon>
               </ToggleButton>
-              <ToggleButton onClick={() => this.formatText("align","center")}>
+              <ToggleButton onClick={() => this.formatText("align", "center")}>
                 <Icon>format_align_center</Icon>
               </ToggleButton>
-              <ToggleButton onClick={() => this.formatText("align","right")}>
+              <ToggleButton onClick={() => this.formatText("align", "right")}>
                 <Icon>format_align_right</Icon>
               </ToggleButton>
-              <ToggleButton onClick={() => this.formatText("align","justify")}>
+              <ToggleButton onClick={() => this.formatText("align", "justify")}>
                 <Icon>format_align_justify</Icon>
               </ToggleButton>
+              <FontFamilyPicker formatTextCallback={this.formatText} />
+              <FontSizePicker formatTextCallback={this.formatText} />
             </div>
           </ToggleButtonGroup>
         </div>

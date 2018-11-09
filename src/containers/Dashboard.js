@@ -54,7 +54,10 @@ const styles = theme => ({
     height: "100vh",
     overflow: "auto"
   },
-  appBarSpacer: theme.mixins.toolbar
+  appBarSpacer: theme.mixins.toolbar,
+  appSpacer: {
+   minHeight: '24px'
+  }
 });
 
 class Dashboard extends React.Component {
@@ -111,8 +114,10 @@ class Dashboard extends React.Component {
               <div className={classes.appBarSpacer} />
               {/* <CenteredTabs /> */}
               <EditorToolBar />
+              <div className={classes.appSpacer} />
+              <Divider />
+              <div className={classes.appSpacer} />
               {/* <Divider /> */}
-              {/* <div className={classes.appBarSpacer} /> */}
               {/* <div> */}
               <Editor state={this.props.state} />
               {/* <AppAction /> */}

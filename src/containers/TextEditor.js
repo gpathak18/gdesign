@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ReactQuill, { Quill } from "react-quill";
-import {IndentStyle} from "./IndentAttributor";
 import editorStyle from "./editor.css";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -9,45 +8,6 @@ import Icon from "@material-ui/core/Icon";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 
-// var Parchment = Quill.import("parchment");
-// const levels = [1, 2, 3, 4, 5];
-// const multiplier = 2;
-
-// const IndentStyle = new IndentAttributor("indent", "margin-left", {
-//   scope: Parchment.Scope.BLOCK,
-//   whitelist: levels.map(value => `${value * multiplier}em`)
-// });
-
-
-
-const BackgroundStyle = Quill.import("attributors/style/background");
-const ColorStyle = Quill.import("attributors/style/color");
-const AlignStyle = Quill.import("attributors/style/align");
-const SizeStyle = Quill.import("attributors/style/size");
-const FontStyle = Quill.import("attributors/style/font");
-// const BoldStyle = Quill.import('attributors/style/bold');
-// const ItalicStyle = Quill.import('attributors/style/italic');
-// const StrikethroughStyle = Quill.import('attributors/style/strike');
-// const ScriptStyle = Quill.import('attributors/style/script');
-// const UnderlineStyle = Quill.import('attributors/style/underline');
-// const LinkStyle = Quill.import('attributors/style/link');
-// const CodeStyle = Quill.import('attributors/style/code');
-
-Quill.register(BackgroundStyle, true);
-Quill.register(ColorStyle, true);
-Quill.register(SizeStyle, true);
-Quill.register(FontStyle, true);
-Quill.register(IndentStyle, true);
-Quill.register(AlignStyle, true);
-
-// Quill.register(BoldStyle);
-// Quill.register(ItalicStyle, true);
-// Quill.register(StrikethroughStyle, true);
-// Quill.register(ScriptStyle, true);
-// Quill.register(ItalicStyle, true);
-// Quill.register(UnderlineStyle, true);
-// Quill.register(LinkStyle);
-// Quill.register(CodeStyle, true);
 
 const styles = theme => ({
   button: {
@@ -110,7 +70,7 @@ class TextEditor extends Component {
           onChange={this.handleChange}
           defaultValue={this.props.defaultText}
         />
-        <ToggleButtonGroup style={{marginTop: '10px'}}>
+        <ToggleButtonGroup style={{marginTop: '5px'}}>
           <ToggleButton onClick={this.handleOnBlur}>
             <Icon>save</Icon>
           </ToggleButton>
