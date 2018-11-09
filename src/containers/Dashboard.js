@@ -56,7 +56,13 @@ const styles = theme => ({
   },
   appBarSpacer: theme.mixins.toolbar,
   appSpacer: {
-   minHeight: '24px'
+    minHeight: "24px"
+  },
+  stickyHeader: {
+    position: "sticky",
+    top: 0,
+    background: "#fafafa",
+    zIndex: 1000
   }
 });
 
@@ -91,7 +97,7 @@ class Dashboard extends React.Component {
               }}
             >
               <div className={classes.toolbarIcon}>
-                <div style={{display: 'flex', alignItems: 'center'}}>
+                <div style={{ display: "flex", alignItems: "center" }}>
                   <IconButton onClick={this.handleDrawerClose}>
                     <ChevronLeftIcon />
                   </IconButton>
@@ -111,17 +117,16 @@ class Dashboard extends React.Component {
               <List>{secondaryListItems}</List>
             </Drawer>
             <main className={classes.content}>
-              <div className={classes.appBarSpacer} />
-              {/* <CenteredTabs /> */}
-              <EditorToolBar />
-              <div className={classes.appSpacer} />
-              <Divider />
-              <div className={classes.appSpacer} />
-              {/* <Divider /> */}
-              {/* <div> */}
-              <Editor state={this.props.state} />
-              {/* <AppAction /> */}
-              {/* </div> */}
+              <div className={classes.stickyHeader}>
+                <div className={classes.appBarSpacer} />
+                <EditorToolBar />
+                <div className={classes.appSpacer} />
+                <Divider />
+              </div>
+              <div  id="root" style={{ height: '100%', width: '100%'}}>
+                <div className={classes.appSpacer} />
+                <Editor state={this.props.state} />
+              </div>
             </main>
           </div>
           <CustomDragLayer />

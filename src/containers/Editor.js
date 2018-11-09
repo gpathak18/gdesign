@@ -17,7 +17,6 @@ import IndentAttributor from './IndentAttributor';
 import DraggableItem from './DraggableItem'
 import FooterEditor from './FooterEditor'
 import BodyEditor from './BodyEditor'
-import divHover from './div.css'
 
 class Editor extends Component {
 
@@ -39,10 +38,10 @@ class Editor extends Component {
     return (
       <React.Fragment>
         <div style={{display: "flex", justifyContent: "center", width: "100%",height: "100%" }}>
-          <div style={{ width: "800px",  height: "100%"}} >
-                <HeaderEditor state={this.props.state} className={divHover}></HeaderEditor>
-                <BodyEditor state={this.props.state}></BodyEditor>
-                <FooterEditor state={this.props.state}></FooterEditor>
+          <div  id="editor"  style={{ width: "800px",  height: "100%"}} >
+                <HeaderEditor id="header" state={this.props.state}></HeaderEditor>
+                <BodyEditor id="body" state={this.props.state}></BodyEditor>
+                <FooterEditor id="footer" state={this.props.state}></FooterEditor>
           </div>
         </div>
       </React.Fragment>

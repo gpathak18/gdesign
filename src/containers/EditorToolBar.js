@@ -180,16 +180,17 @@ class EditorToolBar extends Component {
   }
 
   render() {
+    
     const { classes } = this.props;
 
     return (
       <React.Fragment>
         <div className={classes.toggleContainer}>
           <ToggleButtonGroup id="toolbar">
-            <ToggleButton onClick={() => this.formatText("bold")}>
+            <ToggleButton onClick={() => this.formatText("bold")} disabled={true}>
               <Icon>format_bold</Icon>
             </ToggleButton>
-            <ToggleButton onClick={() => this.formatText("italic")}>
+            <ToggleButton onClick={() => this.formatText("italic")}  disabled={false}> 
               <Icon>format_italic</Icon>
             </ToggleButton>
             <ToggleButton onClick={() => this.formatText("underline")}>

@@ -9,9 +9,10 @@ import ItemTypes from "./ItemTypes";
 import { editor, toolMap } from "./ToolMap";
 import Row from "./Row";
 import store from "./store";
-import { setDroppedItem } from "./actions";
+import { setDroppedItem,setSelectedNode } from "./actions";
 import TextItem from "./TextItem";
 import ImageItem from "./ImageItem";
+import div from './div.css'
 
 
 const boxTarget = {
@@ -57,13 +58,14 @@ function collect(connect, monitor) {
 }
 
 class HeaderEditor extends React.Component {
+
   constructor(props) {
     super(props);
-    this.onHoverUpdate = this.onHoverUpdate.bind(this);
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  onHoverUpdate() {
-    
+  handleClick(event) {
+    store.dispatch(setSelectedNode({ id: event.target.id }));
   }
 
   renderTree(root) {
@@ -71,10 +73,11 @@ class HeaderEditor extends React.Component {
       let comp = ''
       switch (this.props.state[node].type) {
         case ItemTypes.Text:
-          comp = <TextItem key={node} id={node} node={this.props.state[node]} state={this.props.state}/>
+          comp = <TextItem className='parent' key={node} id={node} node={this.props.state[node]} state={this.props.state}
+         />
         break;
         case ItemTypes.Image:
-          comp = <ImageItem key={node} id={node} node={this.props.state[node]} state={this.props.state}/>
+          comp = <ImageItem className='parent' key={node} id={node} node={this.props.state[node]} state={this.props.state}/>
         break;
         default:
           this.items = this.items;

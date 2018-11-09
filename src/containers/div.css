@@ -1,3 +1,6 @@
-.divHover > * {
-    background: #aabbcc;
+
+
+.parent:hover > *:hover {
+  /* opacity: 1; */
+  background: rgb(255,80,90);
 }

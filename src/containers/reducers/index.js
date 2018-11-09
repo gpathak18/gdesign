@@ -3,6 +3,7 @@ import _ from "lodash";
 const initialState = {
   name: "Untitled Template",
   seq: 0,
+  selectedNode: 'root',
   header: {
     type: "header",
     text: "Drop an item.",
@@ -128,10 +129,8 @@ function reducer(state = initialState, action) {
       return obj;
 
     case "SELECTED_NODE":
-      let selNode = {
-        selectedNode: action.payload
-      };
-      return Object.assign({}, state, selNode);
+      
+      return Object.assign({}, state, action.payload);
     case "ADD_ITEM":
       let sequence = state.seq + 1;
 
