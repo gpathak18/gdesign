@@ -16,6 +16,9 @@ import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import Icon from "@material-ui/core/Icon";
 import { SketchPicker } from "react-color";
 import ColorPicker from "./ColorPicker";
+import store from "./store";
+import { setBgColor } from "./actions";
+import _ from "lodash";
 export const mainListItems = (
   <div>
     <ListSubheader component="div">Contents</ListSubheader>
@@ -32,6 +35,14 @@ export const mainListItems = (
     <DraggableItem name="Video" type="video" iconName="videocam" />
   </div>
 );
+
+let updateBackground = (option,color) => {
+  console.log('here',color,option)
+  store.dispatch(
+    setBgColor({ bgColor: color})
+  );
+}
+
 
 export const secondaryListItems = (
   <div>
@@ -54,7 +65,12 @@ export const secondaryListItems = (
     </ListItem>
     <ListSubheader component="div">Color</ListSubheader>
     <ListItem style={{ cursor: "pointer" }}>
-      <ColorPicker colorType="format_color_text" />
+      <ColorPicker
+        style={{ position: "absolute" }}
+        colorType="format_color_fill"
+        formatTextCallback={updateBackground}
+        type="background"
+      />
     </ListItem>
   </div>
 );

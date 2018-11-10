@@ -16,7 +16,7 @@ import ImageBlot from "./ImageBlot";
 import ColorPicker from "./ColorPicker";
 import { IndentStyle } from "./IndentAttributor";
 import { FontAttr } from "./FontFamilyAttributor";
-import img from "../images/001050.jpg";
+import img from "../images/sfm.png";
 import FontFamilyPicker from "./FontFamilyPicker";
 import FontSizePicker from "./FontSizePicker";
 
@@ -223,7 +223,7 @@ class EditorToolBar extends Component {
               <Icon>photo_camera</Icon>
             </ToggleButton>
             <ToggleButton onClick={this.insertDivider}>
-              <Icon>remove</Icon>
+              <Icon>minimize</Icon>
             </ToggleButton>
             <div>
               <ColorPicker

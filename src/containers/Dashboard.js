@@ -25,6 +25,10 @@ import EditorToolBar from "./EditorToolBar";
 import store from "./store";
 import { setTitle } from "./actions";
 import { connect } from "react-redux";
+import ColorPicker from "./ColorPicker";
+import { setDroppedItem, setSelectedNode } from "./actions";
+import TextField from "@material-ui/core/TextField";
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const drawerWidth = 260;
 
@@ -67,14 +71,65 @@ const styles = theme => ({
 });
 
 class Dashboard extends React.Component {
+  state = {
+    isEditTitle: false,
+    text: ''
+  };
+
   constructor(props) {
     super(props);
     this.updateTitle = this.updateTitle.bind(this);
   }
 
-  updateTitle() {
+  showTitleOrEditor = () => {
+    if (this.state.isEditTitle) {
+      return (
+        <TextField
+          id="standard-bare"
+          style={{ width: "200px" }}
+          defaultValue={this.state.text}
+          margin="normal"
+          onChange={this.handleChange}
+        />
+      );
+    } else {
+      return (
+        <Typography
+          variant="h6"
+          color="inherit"
+          noWrap
+          onDoubleClick={this.updateTitle}
+        >
+          {this.props.state.name}
+        </Typography>
+      );
+    }
+  };
+
+  handleClickAway = () => {
+    this.setState({
+      isEditTitle: false,
+      text: this.state.text
+    });
+  };
+
+  handleChange = (e) => {
+    this.setState({
+      isEditTitle: true,
+      text: e.target.value
+
+    });
+  };
+
+
+  updateTitle = () => {
     store.dispatch(setTitle({ name: "Another" }));
-  }
+  };
+
+  handleClick = event => {
+    event.stopPropagation();
+    store.dispatch(setSelectedNode({ selectedNode: event.currentTarget.id }));
+  };
 
   render() {
     const { classes } = this.props;
@@ -97,19 +152,14 @@ class Dashboard extends React.Component {
               }}
             >
               <div className={classes.toolbarIcon}>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <IconButton onClick={this.handleDrawerClose}>
-                    <ChevronLeftIcon />
-                  </IconButton>
-                  <Typography
-                    variant="h6"
-                    color="inherit"
-                    noWrap
-                    onDoubleClick={this.updateTitle}
-                  >
-                    {this.props.state.name}
-                  </Typography>
-                </div>
+                <ClickAwayListener onClickAway={this.handleClickAway}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <IconButton onClick={this.handleDrawerClose}>
+                      <ChevronLeftIcon />
+                      {this.showTitleOrEditor}
+                    </IconButton>
+                  </div>
+                </ClickAwayListener>
               </div>
               <Divider />
               <List>{mainListItems}</List>
@@ -123,8 +173,12 @@ class Dashboard extends React.Component {
                 <div className={classes.appSpacer} />
                 <Divider />
               </div>
-              <div  id="root" style={{ height: '100%', width: '100%'}}>
-                <div className={classes.appSpacer} />
+              <div
+                id="root"
+                onClick={this.handleClick}
+                style={this.props.state.root.style}
+              >
+                {/* <div className={classes.appSpacer} /> */}
                 <Editor state={this.props.state} />
               </div>
             </main>

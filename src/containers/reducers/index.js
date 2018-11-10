@@ -3,32 +3,46 @@ import _ from "lodash";
 const initialState = {
   name: "Untitled Template",
   seq: 0,
-  selectedNode: 'root',
+  selectedNode: "root",
+  root: {
+    style: {
+      width: "100%",
+      height: "100%",
+      background: "none"
+    }
+  },
   header: {
     type: "header",
-    text: "Drop an item.",
+    text: "Drop an item to begin.",
     child: [],
     style: {
-      padding: "1rem",
       borderRadius: "2px",
-      overflow: "auto"
+      overflow: "auto",
+      minHeight: "45px",
+      border: "1px dashed gray"
     }
   },
   body: {
-    type: "row",
-    text: "",
+    type: "body",
+    text: "Drop an item to begin.",
+    child: [],
     style: {
-      height: "60%"
-    },
-    child: []
+      borderRadius: "2px",
+      overflow: "auto",
+      minHeight: "45px",
+      border: "1px dashed gray"
+    }
   },
   footer: {
-    type: "row",
-    text: "",
+    type: "footer",
+    text: "Drop an item to begin.",
+    child: [],
     style: {
-      height: "20%"
-    },
-    child: []
+      borderRadius: "2px",
+      overflow: "auto",
+      minHeight: "45px",
+      border: "1px dashed gray"
+    }
   }
 };
 
@@ -129,33 +143,72 @@ function reducer(state = initialState, action) {
       return obj;
 
     case "SELECTED_NODE":
-      
-      return Object.assign({}, state, action.payload);
+      let currentSelectedNode = state.selectedNode;
+      let newState = Object.assign({}, state, action.payload);
+
+      if (
+        newState[action.payload.selectedNode] &&
+        action.payload.selectedNode !== "root"
+      ) {
+        newState[action.payload.selectedNode].style = {
+          ...newState[action.payload.selectedNode].style,
+          border: "2px solid gray"
+        };
+      }
+
+      if (
+        currentSelectedNode !== "root" &&
+        currentSelectedNode !== action.payload.selectedNode &&
+        newState[currentSelectedNode]
+      ) {
+        newState[currentSelectedNode].style = {
+          ...newState[currentSelectedNode].style,
+          border: "1px dashed gray"
+        };
+      }
+
+      console.log("selected node-", action.payload.selectedNode, newState);
+
+      return newState;
+    case "SET_BG_COLOR":
+      let node = state.selectedNode;
+      let nState = Object.assign({}, state);
+      console.log("bg color node-", action.payload.selectedNode);
+
+      if (!_.isEmpty(nState[node])) {
+        nState[node].style = {
+          ...nState[node].style,
+          background: action.payload.bgColor
+        };
+      }
+
+      return nState;
     case "ADD_ITEM":
-      let sequence = state.seq + 1;
+      let sequence = {
+        seq: state.seq + 1
+      };
 
       let row = {};
 
-      row[sequence] = action.payload.item;
+      row[sequence.seq] = action.payload.item;
 
-      let child = [...state.header.child, sequence];
+      let child = [...state[action.payload.parent].child, sequence.seq];
 
-      let obj = {
-        ...state,
-        header: Object.assign({}, state.header, {
-          type: "header",
-          text: "",
-          child: child
-        }),
-        ...row,
-        seq: sequence
-      };
+      let nodeChild = {};
+
+      nodeChild[action.payload.parent] = Object.assign({}, state.header, {
+        type: "header",
+        text: "",
+        child: child
+      });
+
+      let obj = Object.assign({}, state, nodeChild, row, sequence);
 
       console.log("state after", obj);
 
       return obj;
     case "SET_TITLE":
-      let name = action.payload.name
+      let name = action.payload.name;
       return Object.assign({}, state, name);
     default:
       return state;

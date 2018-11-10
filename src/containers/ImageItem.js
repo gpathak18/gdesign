@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import img from '../images/001050.jpg'
+import img from '../images/sfm.png'
 const styles = theme => ({
     button: {
       margin: theme.spacing.unit,

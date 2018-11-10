@@ -9,11 +9,10 @@ import ItemTypes from "./ItemTypes";
 import { editor, toolMap } from "./ToolMap";
 import Row from "./Row";
 import store from "./store";
-import { setDroppedItem,setSelectedNode } from "./actions";
+import { setDroppedItem, setSelectedNode } from "./actions";
 import TextItem from "./TextItem";
 import ImageItem from "./ImageItem";
-import div from './div.css'
-
+import div from "./div.css";
 
 const boxTarget = {
   drop(props, monitor) {
@@ -24,6 +23,7 @@ const boxTarget = {
           item: {
             type: "Text",
             text: "",
+            style: { padding: "12px 15px" },
             child: []
           }
         };
@@ -35,6 +35,7 @@ const boxTarget = {
           item: {
             type: "Image",
             url: "",
+            style: {},
             child: []
           }
         };
@@ -58,33 +59,43 @@ function collect(connect, monitor) {
 }
 
 class HeaderEditor extends React.Component {
-
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(event) {
-    store.dispatch(setSelectedNode({ id: event.target.id }));
-  }
+  handleClick = event => {
+    event.stopPropagation();
+    store.dispatch(setSelectedNode({ selectedNode: event.currentTarget.id }));
+  };
 
   renderTree(root) {
     return root.child.map(node => {
-      let comp = ''
+      let comp = "";
       switch (this.props.state[node].type) {
         case ItemTypes.Text:
-          comp = <TextItem className='parent' key={node} id={node} node={this.props.state[node]} state={this.props.state}
-         />
-        break;
+          comp = (
+            <TextItem
+              key={node}
+              id={node}
+              node={this.props.state[node]}
+              state={this.props.state}
+            />
+          );
+          break;
         case ItemTypes.Image:
-          comp = <ImageItem className='parent' key={node} id={node} node={this.props.state[node]} state={this.props.state}/>
-        break;
+          comp = (
+            <ImageItem
+              key={node}
+              id={node}
+              node={this.props.state[node]}
+              state={this.props.state}
+            />
+          );
+          break;
         default:
           this.items = this.items;
       }
-      return (
-        comp
-      );
+      return comp;
     });
   }
 
@@ -101,8 +112,8 @@ class HeaderEditor extends React.Component {
 
     this.isActive = canDrop && isOver;
 
-    let backgroundColor = "";
-    let border = "1px dashed gray";
+    let backgroundColor = this.props.state.header.style.background;
+    let border = this.props.state.header.style.border;
     let boxShadow = "";
 
     if (this.isActive) {
@@ -117,7 +128,17 @@ class HeaderEditor extends React.Component {
     return (
       connectDropTarget &&
       connectDropTarget(
-        <div style={{ ...this.props.state.header.style, backgroundColor, boxShadow, border }} onMouseOver={this.onHoverUpdate}>
+        <div
+          id="header"
+          style={{
+            ...this.props.state.header.style,
+            backgroundColor,
+            boxShadow,
+            border
+          }}
+          onClick={this.handleClick}
+          onMouseOver={this.onHoverUpdate}
+        >
           {this.renderTree(this.props.state.header)}
         </div>
       )
@@ -125,15 +146,14 @@ class HeaderEditor extends React.Component {
   }
 
   findCard(id) {
-		const { cards } = this.state
-		const card = cards.filter(c => c.id === id)[0]
+    const { cards } = this.state;
+    const card = cards.filter(c => c.id === id)[0];
 
-		return {
-			card,
-			index: cards.indexOf(card),
-		}
+    return {
+      card,
+      index: cards.indexOf(card)
+    };
   }
-  
 }
 
 export default DropTarget(
