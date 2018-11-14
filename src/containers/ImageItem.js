@@ -1,16 +1,19 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import img from '../images/sfm.png'
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import img from "../images/sfm.png";
+import store from "./store";
+import { setDroppedItem, setSelectedNode } from "./actions";
+
 const styles = theme => ({
-    button: {
-      margin: theme.spacing.unit,
-    },
-    input: {
-      display: 'none',
-    },
-  });
+  button: {
+    margin: theme.spacing.unit
+  },
+  input: {
+    display: "none"
+  }
+});
 class ImageItem extends Component {
   constructor(props) {
     super(props);
@@ -20,32 +23,30 @@ class ImageItem extends Component {
 
   handleChange(url) {
     console.log(url);
-    this.setState({ url: url});
+    this.setState({ url: url });
   }
 
-  showImage() {
+  showImage() {}
 
-  }
-  
   showComponent() {
     const { classes } = this.props;
-  
+
     if (this.state.url.length > 0) {
       return (
-        <div >
-          <img src={img}/>
+        <div>
+          <img src={img} />
         </div>
       );
     } else {
       return (
-        <div style={{display: 'flex', justifyContent: 'center'}}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <input
             accept="image/*"
             className={classes.input}
             id="image-file"
             multiple
             type="file"
-            onChange={ (e) => this.handleChange(e.target.value) }
+            onChange={e => this.handleChange(e.target.value)}
           />
           <label htmlFor="image-file">
             <Button
@@ -61,14 +62,28 @@ class ImageItem extends Component {
     }
   }
 
+  handleClick = event => {
+    event.stopPropagation();
+    store.dispatch(
+      setSelectedNode({ selectedNode: parseInt(event.currentTarget.id) })
+    );
+  };
+
   render() {
-    return <div>{this.showComponent()}</div>;
+    return (
+      <div
+        id={this.props.id}
+        onClick={this.handleClick}
+        style={this.props.state[this.props.id].style}
+      >
+        {this.showComponent()}
+      </div>
+    );
   }
 }
 
 ImageItem.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
-  
 
 export default withStyles(styles)(ImageItem);

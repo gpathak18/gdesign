@@ -17,8 +17,10 @@ import Icon from "@material-ui/core/Icon";
 import { SketchPicker } from "react-color";
 import ColorPicker from "./ColorPicker";
 import store from "./store";
-import { setBgColor } from "./actions";
+import { setBgColor,setStyle } from "./actions";
 import _ from "lodash";
+
+
 export const mainListItems = (
   <div>
     <ListSubheader component="div">Contents</ListSubheader>
@@ -43,22 +45,29 @@ let updateBackground = (option,color) => {
   );
 }
 
+let handleClick = (style) => {
+ 
+  store.dispatch(
+    setStyle(style)
+  );
+
+}
 
 export const secondaryListItems = (
   <div>
     <ListSubheader component="div">Alignement</ListSubheader>
     <ListItem style={{ cursor: "pointer" }}>
       <ToggleButtonGroup>
-        <ToggleButton>
+        <ToggleButton onClick={() => handleClick({textAlign: 'left'})}>
           <Icon>format_align_left</Icon>
         </ToggleButton>
-        <ToggleButton>
+        <ToggleButton onClick={() => handleClick({textAlign: 'center'})}>
           <Icon>format_align_center</Icon>
         </ToggleButton>
-        <ToggleButton>
+        <ToggleButton onClick={() => handleClick({textAlign: 'right'})}>
           <Icon>format_align_right</Icon>
         </ToggleButton>
-        <ToggleButton>
+        <ToggleButton onClick={() => handleClick({textAlign: 'justify'})}>
           <Icon>format_align_justify</Icon>
         </ToggleButton>
       </ToggleButtonGroup>
@@ -66,7 +75,7 @@ export const secondaryListItems = (
     <ListSubheader component="div">Color</ListSubheader>
     <ListItem style={{ cursor: "pointer" }}>
       <ColorPicker
-        style={{ position: "absolute" }}
+        // style={{ position: "absolute" }}
         colorType="format_color_fill"
         formatTextCallback={updateBackground}
         type="background"

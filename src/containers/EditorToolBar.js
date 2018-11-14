@@ -172,7 +172,8 @@ class EditorToolBar extends Component {
       "image",
       {
         alt: "Image",
-        url: img
+        url: img,
+        style: "display: inline-block"
       },
       Quill.sources.USER
     );

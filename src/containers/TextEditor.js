@@ -7,6 +7,8 @@ import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import { removeItem } from "./actions";
+import store from "./store";
 
 
 const styles = theme => ({
@@ -57,6 +59,14 @@ class TextEditor extends Component {
     this.props.editorOnBlur(this.state.text);
   }
 
+  handleClick = () => {
+ 
+    store.dispatch(
+      removeItem()
+    );
+  
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -70,7 +80,7 @@ class TextEditor extends Component {
           onChange={this.handleChange}
           defaultValue={this.props.defaultText}
         />
-        <ToggleButtonGroup style={{marginTop: '5px'}}>
+        <ToggleButtonGroup >
           <ToggleButton onClick={this.handleOnBlur}>
             <Icon>save</Icon>
           </ToggleButton>
@@ -80,7 +90,7 @@ class TextEditor extends Component {
           <ToggleButton>
             <Icon>redo</Icon>
           </ToggleButton>
-          <ToggleButton>
+          <ToggleButton >
             <Icon>clear</Icon>
           </ToggleButton>
         </ToggleButtonGroup>

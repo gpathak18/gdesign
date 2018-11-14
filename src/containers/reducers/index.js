@@ -207,6 +207,18 @@ function reducer(state = initialState, action) {
       console.log("state after", obj);
 
       return obj;
+    case "SET_STYLE":
+      let styleNode = state.selectedNode;
+      let styleState = Object.assign({}, state);
+
+      if (!_.isEmpty(styleState[styleNode])) {
+        styleState[styleNode].style = {
+          ...styleState[styleNode].style,...action.payload
+        }
+      }
+
+      console.log('style',styleState)
+      return styleState;
     case "SET_TITLE":
       let name = action.payload.name;
       return Object.assign({}, state, name);
