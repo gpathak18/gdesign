@@ -28,7 +28,7 @@ import { connect } from "react-redux";
 import ColorPicker from "./ColorPicker";
 import { setDroppedItem, setSelectedNode } from "./actions";
 import TextField from "@material-ui/core/TextField";
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 const drawerWidth = 260;
 
@@ -73,7 +73,7 @@ const styles = theme => ({
 class Dashboard extends React.Component {
   state = {
     isEditTitle: false,
-    text: ''
+    text: ""
   };
 
   constructor(props) {
@@ -113,14 +113,12 @@ class Dashboard extends React.Component {
     });
   };
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({
       isEditTitle: true,
       text: e.target.value
-
     });
   };
-
 
   updateTitle = () => {
     store.dispatch(setTitle({ name: "Another" }));
@@ -152,14 +150,14 @@ class Dashboard extends React.Component {
               }}
             >
               <div className={classes.toolbarIcon}>
-                <ClickAwayListener onClickAway={this.handleClickAway}>
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <ClickAwayListener onClickAway={this.handleClickAway}>
                     <IconButton onClick={this.handleDrawerClose}>
                       <ChevronLeftIcon />
-                      {this.showTitleOrEditor}
+                      {/* {this.showTitleOrEditor} */}
                     </IconButton>
-                  </div>
-                </ClickAwayListener>
+                  </ClickAwayListener>
+                </div>
               </div>
               <Divider />
               <List>{mainListItems}</List>

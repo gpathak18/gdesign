@@ -17,6 +17,7 @@ import IndentAttributor from './IndentAttributor';
 import DraggableItem from './DraggableItem'
 import FooterEditor from './FooterEditor'
 import BodyEditor from './BodyEditor'
+import Container from './Container'
 
 class Editor extends Component {
 
@@ -39,9 +40,12 @@ class Editor extends Component {
       <React.Fragment>
         <div style={{display: "flex", justifyContent: "center", width: "100%",height: "100%" }}>
           <div  id="editor"  style={{ width: "800px",  height: "100%"}} >
-                <HeaderEditor id="header" state={this.props.state}></HeaderEditor>
+                {/* <HeaderEditor id="header" state={this.props.state}></HeaderEditor>
                 <BodyEditor id="body" state={this.props.state}></BodyEditor>
-                <FooterEditor id="footer" state={this.props.state}></FooterEditor>
+                <FooterEditor id="footer" state={this.props.state}></FooterEditor> */}
+                <Container id="header" state={this.props.state}></Container>
+                <Container id="body" state={this.props.state}></Container>
+                <Container id="footer" state={this.props.state}></Container>
           </div>
         </div>
       </React.Fragment>

@@ -16,6 +16,7 @@ import div from "./div.css";
 
 const boxTarget = {
   drop(props, monitor) {
+    console.log(monitor.getItem())
     switch (monitor.getItemType()) {
       case ItemTypes.Text:
         let textItem = {

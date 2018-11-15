@@ -31,7 +31,7 @@ export const mainListItems = (
       type="imagegroup"
       iconName="collections"
     />
-    <DraggableItem name="Divider" type="divider" iconName="horizontal_split" />
+    <DraggableItem name="Splitter" type="divider" iconName="horizontal_split" />
     <DraggableItem name="Button" type="button" iconName="crop_landscape" />
     <DraggableItem name="Icons" type="icons" iconName="insert_emoticon" />
     <DraggableItem name="Video" type="video" iconName="videocam" />
