@@ -40,6 +40,7 @@ function collect(connect, monitor) {
 }
 
 class DraggableItem extends Component {
+  
   componentDidMount() {
     const { connectDragPreview } = this.props;
     if (connectDragPreview) {

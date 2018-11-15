@@ -16,6 +16,12 @@ import div from "./div.css";
 import update from 'immutability-helper';
 
 const itemTarget = {
+
+  hover(props, monitor, component) {
+    const dragIndex = monitor.getItem().index;
+    console.log('hovering')
+  },
+
   drop(props, monitor) {
     switch (monitor.getItemType()) {
       case ItemTypes.Text:
@@ -60,6 +66,7 @@ function collect(connect, monitor) {
 }
 
 class Container extends React.Component {
+
   constructor(props) {
     super(props);
   }
@@ -85,16 +92,25 @@ class Container extends React.Component {
   }
 
   moveCard(dragIndex, hoverIndex) {
-    const { cards } = this.state;
-    const dragCard = cards[dragIndex];
+    console.log('props',this.props,dragIndex,hoverIndex)
+    const { child } = this.props.state[this.props.id];
+    const dragChild = child[dragIndex];
 
-    this.setState(
-      update(this.state, {
-        cards: {
-          $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]]
-        }
-      })
-    );
+    let childNew = {
+      // child : {
+        $splice: [[dragIndex, 1], [hoverIndex, 0, dragChild]]
+      // }
+    }
+
+    console.log('childs', child, childNew)
+
+    // this.setState(
+    //   update(this.state, {
+    //     cards: {
+    //       $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]]
+    //     }
+    //   })
+    // );
   }
 
   handleClick = event => {
@@ -103,7 +119,7 @@ class Container extends React.Component {
   };
 
   renderTree(root) {
-    return root.child.map(node => {
+    return root.child.map((node, i) => {
       let comp = "";
       switch (this.props.state[node].type) {
         case ItemTypes.Text:
@@ -111,8 +127,12 @@ class Container extends React.Component {
             <TextItem
               key={node}
               id={node}
+              index={i}
+              parent={root.type}
               node={this.props.state[node]}
               state={this.props.state}
+              moveCard={this.moveCard.bind(this)}
+              type="Text"
             />
           );
           break;
@@ -121,8 +141,11 @@ class Container extends React.Component {
             <ImageItem
               key={node}
               id={node}
+              index={i}
+              parent={root.type}
               node={this.props.state[node]}
               state={this.props.state}
+              type="Image"
             />
           );
           break;

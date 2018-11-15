@@ -135,7 +135,7 @@ class Dashboard extends React.Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <DragDropContextProvider backend={HTML5Backend}>
+        {/* <DragDropContextProvider backend={HTML5Backend}> */}
           <div className={classes.root}>
             <CssBaseline />
             <AppBar position="fixed" className={classes.appBar}>
@@ -181,8 +181,8 @@ class Dashboard extends React.Component {
               </div>
             </main>
           </div>
-          <CustomDragLayer />
-        </DragDropContextProvider>
+          {/* <CustomDragLayer />
+        </DragDropContextProvider> */}
       </React.Fragment>
     );
   }
