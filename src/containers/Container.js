@@ -18,11 +18,10 @@ import update from 'immutability-helper';
 const itemTarget = {
 
   hover(props, monitor, component) {
-    const dragIndex = monitor.getItem().index;
-    console.log('hovering')
   },
 
   drop(props, monitor) {
+    console.log('drop action',props,monitor)
     switch (monitor.getItemType()) {
       case ItemTypes.Text:
         let textItem = {
@@ -51,7 +50,7 @@ const itemTarget = {
       default:
         this.items = this.items;
     }
-    return { name: "dango" };
+    return { parent: props.id };
   }
 };
 
@@ -96,13 +95,16 @@ class Container extends React.Component {
     const { child } = this.props.state[this.props.id];
     const dragChild = child[dragIndex];
 
-    let childNew = {
-      // child : {
-        $splice: [[dragIndex, 1], [hoverIndex, 0, dragChild]]
-      // }
-    }
+    // let temp = child[hoverIndex];
+    // child[hoverIndex] = child[dragIndex];
+    // child[dragIndex] = temp;
 
-    console.log('childs', child, childNew)
+    // console.log('childs', child)
+
+    [child[dragIndex], child[hoverIndex]] = [child[hoverIndex], child[dragIndex]];
+
+    console.log('childs', child)
+
 
     // this.setState(
     //   update(this.state, {
@@ -120,6 +122,7 @@ class Container extends React.Component {
 
   renderTree(root) {
     return root.child.map((node, i) => {
+      // console.log('node',node)
       let comp = "";
       switch (this.props.state[node].type) {
         case ItemTypes.Text:

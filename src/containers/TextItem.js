@@ -116,20 +116,20 @@ class TextItem extends Component {
 const cardSource = {
 
 	beginDrag(props) {		
-    // console.log('dragging',props)
 		return {			
 			index: props.index,
 			id: props.id,
-			card: props.node
+      node: props.node,
+      parent: props.parent
 		};
 	},
 
 	endDrag(props, monitor) {
 		const item = monitor.getItem();
 		const dropResult = monitor.getDropResult();	
-
-		if ( dropResult && dropResult.listId !== item.listId ) {
-			// props.removeCard(item.index);
+    console.log('dropped',item,dropResult)
+		if ( dropResult && dropResult.parent !== item.parent ) {
+			props.removeCard(item.index);
 		}
 	}
 };
@@ -138,10 +138,10 @@ const cardTarget = {
 
 	hover(props, monitor, component) {
 		const dragIndex = monitor.getItem().index;
-    const hoverIndex = props.id;
-    const sourceListId = monitor.getItem().id;	
+    const hoverIndex = props.index;
+    const sourceListId = monitor.getItem().parent;	
 
-    // console.log('hovering item',dragIndex,hoverIndex,sourceListId)
+    // console.log('hovering item',dragIndex,hoverIndex,sourceListId,props)
 
 		// Don't replace items with themselves
 		if (dragIndex === hoverIndex) {
@@ -174,8 +174,10 @@ const cardTarget = {
 			return;
 		}
 
-		// Time to actually perform the action
-		if ( props.id === sourceListId ) {
+    // Time to actually perform the action
+    console.log('hovering item',dragIndex,hoverIndex,sourceListId,props)
+
+		if ( props.parent === sourceListId ) {
 			props.moveCard(dragIndex, hoverIndex);
 			// Note: we're mutating the monitor item here!
 			// Generally it's better to avoid mutations,

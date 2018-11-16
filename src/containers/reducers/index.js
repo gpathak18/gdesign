@@ -196,8 +196,8 @@ function reducer(state = initialState, action) {
 
       let nodeChild = {};
 
-      nodeChild[action.payload.parent] = Object.assign({}, state.header, {
-        type: "header",
+      nodeChild[action.payload.parent] = Object.assign({}, state[action.payload.parent], {
+        type: action.payload.parent,
         text: "",
         child: child
       });
