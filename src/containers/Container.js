@@ -9,7 +9,7 @@ import ItemTypes from "./ItemTypes";
 import { editor, toolMap } from "./ToolMap";
 import Row from "./Row";
 import store from "./store";
-import { setDroppedItem, setSelectedNode } from "./actions";
+import { moveItem, sortItem, setSelectedNode } from "./actions";
 import TextItem from "./TextItem";
 import ImageItem from "./ImageItem";
 import div from "./div.css";
@@ -20,38 +20,10 @@ const itemTarget = {
   hover(props, monitor, component) {
   },
 
-  drop(props, monitor) {
-    console.log('drop action',props,monitor)
-    switch (monitor.getItemType()) {
-      case ItemTypes.Text:
-        let textItem = {
-          parent: props.id,
-          item: {
-            type: "Text",
-            text: "",
-            style: { padding: "12px 15px" },
-            child: []
-          }
-        };
-        store.dispatch(setDroppedItem(textItem));
-        break;
-      case ItemTypes.Image:
-        let imageItem = {
-          parent: props.id,
-          item: {
-            type: "Image",
-            url: "",
-            style: {},
-            child: []
-          }
-        };
-        store.dispatch(setDroppedItem(imageItem));
-        break;
-      default:
-        this.items = this.items;
-    }
+  drop(props, monitor, component) {
     return { parent: props.id };
   }
+
 };
 
 function collect(connect, monitor) {
@@ -70,40 +42,28 @@ class Container extends React.Component {
     super(props);
   }
 
-  pushCard(card) {
-    this.setState(
-      update(this.state, {
-        cards: {
-          $push: [card]
-        }
-      })
-    );
-  }
-
-  removeCard(index) {
-    this.setState(
-      update(this.state, {
-        cards: {
-          $splice: [[index, 1]]
-        }
-      })
-    );
+  removeCard(item) {
+    store.dispatch(moveItem(item));
   }
 
   moveCard(dragIndex, hoverIndex) {
-    console.log('props',this.props,dragIndex,hoverIndex)
-    const { child } = this.props.state[this.props.id];
-    const dragChild = child[dragIndex];
 
+    let item = {
+      dragIndex,
+      hoverIndex,
+      parent: this.props.id
+    }
+
+    store.dispatch(sortItem(item));
     // let temp = child[hoverIndex];
     // child[hoverIndex] = child[dragIndex];
     // child[dragIndex] = temp;
 
     // console.log('childs', child)
 
-    [child[dragIndex], child[hoverIndex]] = [child[hoverIndex], child[dragIndex]];
+    // [child[dragIndex], child[hoverIndex]] = [child[hoverIndex], child[dragIndex]];
 
-    console.log('childs', child)
+    // console.log('childs', child)
 
 
     // this.setState(
@@ -135,6 +95,7 @@ class Container extends React.Component {
               node={this.props.state[node]}
               state={this.props.state}
               moveCard={this.moveCard.bind(this)}
+              removeCard={this.removeCard.bind(this)}
               type="Text"
             />
           );
@@ -148,6 +109,8 @@ class Container extends React.Component {
               parent={root.type}
               node={this.props.state[node]}
               state={this.props.state}
+              moveCard={this.moveCard.bind(this)}
+              removeCard={this.removeCard.bind(this)}
               type="Image"
             />
           );

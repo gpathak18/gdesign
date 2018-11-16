@@ -8,7 +8,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 const styles = {
   display: "inline-block",
-  transform: "rotate(-7deg)",
+  // transform: "rotate(-7deg)",
   zIndex: "1000",
   borderRadius: '5px',
   border: '1px solid gray'

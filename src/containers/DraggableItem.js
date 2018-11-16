@@ -7,6 +7,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import Icon from '@material-ui/core/Icon';
+import store from "./store";
+import { setDroppedItem, setSelectedNode } from "./actions";
 
 const styles = theme => ({
   root: {
@@ -18,17 +20,46 @@ const styles = theme => ({
 
 const itemSource = {
   beginDrag(props) {
-    console.log("drag started", props);
-    return { name: props.name };
+    return { parent: 'menu' };
   },
   endDrag(props, monitor) {
-    const item = monitor.getItem();
-    const dropResult = monitor.getDropResult();
+		const item = monitor.getItem();
+		const dropResult = monitor.getDropResult();	
+    console.log('dropped',item,dropResult,monitor.getItemType())
+		if (dropResult) {
 
-    if (dropResult) {
-      // alert(`You dropped ${item.name} into ${dropResult.name}!`);
-    }
-  }
+      switch (monitor.getItemType()) {
+        case ItemTypes.Text:
+          let textItem = {
+            parent: dropResult.parent,
+            item: {
+              type: "Text",
+              text: "Double click to edit.",
+              style: { padding: "12px 15px" },
+              child: []
+            }
+          };
+          store.dispatch(setDroppedItem(textItem));
+          break;
+        case ItemTypes.Image:
+          let imageItem = {
+            parent: dropResult.parent,
+            item: {
+              type: "Image",
+              url: "",
+              style: {},
+              child: []
+            }
+          };
+          store.dispatch(setDroppedItem(imageItem));
+          break;
+        default:
+          this.items = this.items;
+      }
+
+		}
+	}
+ 
 };
 
 function collect(connect, monitor) {
