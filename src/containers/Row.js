@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import ItemTypes from "./ItemTypes";
+import ItemTypes from "../containers/ItemTypes";
 import {
   DropTarget,
   ConnectDropTarget,
   DropTargetMonitor,
   DropTargetConnector
 } from "react-dnd";
-import DraggableText from "./DraggableItem";
+import DraggableText from "../containers/DraggableItem";
 import Column from "./Column";
-import store from "./store";
-import { setSelectedNode } from "./actions";
+import store from "../containers/store";
+import { setSelectedNode } from "../containers/actions";
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';

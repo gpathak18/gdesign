@@ -35,7 +35,7 @@ const itemSource = {
             item: {
               type: "Text",
               text: "Double click to edit.",
-              style: { padding: "12px 15px" },
+              style: {  border: "2px solid transparent" },
               child: []
             }
           };

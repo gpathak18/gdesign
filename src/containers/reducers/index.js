@@ -19,7 +19,7 @@ const initialState = {
       borderRadius: "2px",
       overflow: "auto",
       minHeight: "45px",
-      border: "1px dashed gray"
+      border: "2px dashed gray"
     }
   },
   body: {
@@ -30,7 +30,9 @@ const initialState = {
       borderRadius: "2px",
       overflow: "auto",
       minHeight: "45px",
-      border: "1px dashed gray"
+      border: "2px dashed gray",
+      marginTop: '1px',
+      marginBottom: '1px'
     }
   },
   footer: {
@@ -41,7 +43,7 @@ const initialState = {
       borderRadius: "2px",
       overflow: "auto",
       minHeight: "45px",
-      border: "1px dashed gray"
+      border: "2px dashed gray"
     }
   }
 };
@@ -152,19 +154,28 @@ function reducer(state = initialState, action) {
       ) {
         newState[action.payload.selectedNode].style = {
           ...newState[action.payload.selectedNode].style,
-          border: "2px solid gray"
+          border: "2px solid red"
         };
       }
 
       if (
-        currentSelectedNode !== "root" &&
+        currentSelectedNode !== "root" && 
         currentSelectedNode !== action.payload.selectedNode &&
         newState[currentSelectedNode]
       ) {
-        newState[currentSelectedNode].style = {
-          ...newState[currentSelectedNode].style,
-          border: "1px dashed gray"
-        };
+
+        if(currentSelectedNode === 'header' || currentSelectedNode === 'body' || currentSelectedNode === 'footer') {
+          newState[currentSelectedNode].style = {
+            ...newState[currentSelectedNode].style,
+            border: "2px dashed gray"
+          };
+        } else {
+          newState[currentSelectedNode].style = {
+            ...newState[currentSelectedNode].style,
+            border: "2px solid transparent"
+          };
+        }
+ 
       }
 
       console.log("selected node-", action.payload.selectedNode, newState);

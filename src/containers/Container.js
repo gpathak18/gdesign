@@ -1,19 +1,12 @@
 import * as React from "react";
 import {
-  DropTarget,
-  DropTargetConnector,
-  DropTargetMonitor,
-  ConnectDropTarget
+  DropTarget
 } from "react-dnd";
 import ItemTypes from "./ItemTypes";
-import { editor, toolMap } from "./ToolMap";
-import Row from "./Row";
 import store from "./store";
 import { moveItem, sortItem, setSelectedNode } from "./actions";
 import TextItem from "./TextItem";
 import ImageItem from "./ImageItem";
-import div from "./div.css";
-import update from 'immutability-helper';
 
 const itemTarget = {
 
@@ -55,24 +48,6 @@ class Container extends React.Component {
     }
 
     store.dispatch(sortItem(item));
-    // let temp = child[hoverIndex];
-    // child[hoverIndex] = child[dragIndex];
-    // child[dragIndex] = temp;
-
-    // console.log('childs', child)
-
-    // [child[dragIndex], child[hoverIndex]] = [child[hoverIndex], child[dragIndex]];
-
-    // console.log('childs', child)
-
-
-    // this.setState(
-    //   update(this.state, {
-    //     cards: {
-    //       $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]]
-    //     }
-    //   })
-    // );
   }
 
   handleClick = event => {
@@ -82,11 +57,10 @@ class Container extends React.Component {
 
   renderTree(root) {
     return root.child.map((node, i) => {
-      // console.log('node',node)
-      let comp = "";
+      let item = "";
       switch (this.props.state[node].type) {
         case ItemTypes.Text:
-          comp = (
+        item = (
             <TextItem
               key={node}
               id={node}
@@ -101,7 +75,7 @@ class Container extends React.Component {
           );
           break;
         case ItemTypes.Image:
-          comp = (
+        item = (
             <ImageItem
               key={node}
               id={node}
@@ -118,16 +92,11 @@ class Container extends React.Component {
         default:
           this.items = this.items;
       }
-      return comp;
+      return item;
     });
   }
 
   render() {
-    const style = {
-      padding: "1rem",
-      borderRadius: "2px",
-      overflow: "auto"
-    };
 
     const { canDrop, isOver, connectDropTarget, draggingItem, id } = this.props;
 

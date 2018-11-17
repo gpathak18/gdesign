@@ -5,14 +5,13 @@ import {
   DropTargetMonitor,
   ConnectDropTarget
 } from "react-dnd";
-import ItemTypes from "./ItemTypes";
+import ItemTypes from "../containers/ItemTypes";
 import { editor, toolMap } from "./ToolMap";
 import Row from "./Row";
-import store from "./store";
-import { setDroppedItem, setSelectedNode } from "./actions";
-import TextItem from "./TextItem";
-import ImageItem from "./ImageItem";
-import div from "./div.css";
+import store from "../containers/store";
+import { setDroppedItem, setSelectedNode } from "../containers/actions";
+import TextItem from "../containers/TextItem";
+import ImageItem from "../containers/ImageItem";
 
 const boxTarget = {
   drop(props, monitor) {

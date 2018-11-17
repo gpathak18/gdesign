@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import EditorToolBar from "./EditorToolBar";
-import TextEditor from "./TextEditor";
+import EditorToolBar from "../containers/EditorToolBar";
+import TextEditor from "../containers/TextEditor";
 
 const toolMap = new Map();
 
