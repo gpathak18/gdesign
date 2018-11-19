@@ -29,6 +29,12 @@ import ColorPicker from "./ColorPicker";
 import { setDroppedItem, setSelectedNode } from "./actions";
 import TextField from "@material-ui/core/TextField";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Collapse from "@material-ui/core/Collapse";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Icon from "@material-ui/core/Icon";
+
 
 const drawerWidth = 260;
 
@@ -67,13 +73,17 @@ const styles = theme => ({
     top: 0,
     background: "#fafafa",
     zIndex: 1000
+  },
+  nested: {
+    paddingLeft: theme.spacing.unit * 4
   }
 });
 
 class Dashboard extends React.Component {
   state = {
     isEditTitle: false,
-    text: ""
+    text: "",
+    open: false
   };
 
   constructor(props) {
@@ -129,6 +139,7 @@ class Dashboard extends React.Component {
     store.dispatch(setSelectedNode({ selectedNode: event.currentTarget.id }));
   };
 
+
   render() {
     const { classes } = this.props;
 
@@ -136,52 +147,54 @@ class Dashboard extends React.Component {
       <React.Fragment>
         <CssBaseline />
         {/* <DragDropContextProvider backend={HTML5Backend}> */}
-          <div className={classes.root}>
-            <CssBaseline />
-            <AppBar position="fixed" className={classes.appBar}>
-              <Toolbar variant="dense" />
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar position="fixed" className={classes.appBar}>
+            <Toolbar variant="dense" />
+            <Divider />
+          </AppBar>
+          <Drawer
+            className={classes.drawer}
+            variant="permanent"
+            classes={{
+              paper: classes.drawerPaper
+            }}
+          >
+            <div className={classes.toolbarIcon}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <ClickAwayListener onClickAway={this.handleClickAway}>
+                  <IconButton onClick={this.handleDrawerClose}>
+                    <ChevronLeftIcon />
+                    {/* {this.showTitleOrEditor} */}
+                  </IconButton>
+                </ClickAwayListener>
+              </div>
+            </div>
+            <Divider />
+            <List>
+              {mainListItems}
+            </List>
+            <Divider />
+            <List>{secondaryListItems}</List>
+          </Drawer>
+          <main className={classes.content}>
+            <div className={classes.stickyHeader}>
+              <div className={classes.appBarSpacer} />
+              <EditorToolBar />
+              <div className={classes.appSpacer} />
               <Divider />
-            </AppBar>
-            <Drawer
-              className={classes.drawer}
-              variant="permanent"
-              classes={{
-                paper: classes.drawerPaper
-              }}
+            </div>
+            <div
+              id="root"
+              onClick={this.handleClick}
+              style={this.props.state.root.style}
             >
-              <div className={classes.toolbarIcon}>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <ClickAwayListener onClickAway={this.handleClickAway}>
-                    <IconButton onClick={this.handleDrawerClose}>
-                      <ChevronLeftIcon />
-                      {/* {this.showTitleOrEditor} */}
-                    </IconButton>
-                  </ClickAwayListener>
-                </div>
-              </div>
-              <Divider />
-              <List>{mainListItems}</List>
-              <Divider />
-              <List>{secondaryListItems}</List>
-            </Drawer>
-            <main className={classes.content}>
-              <div className={classes.stickyHeader}>
-                <div className={classes.appBarSpacer} />
-                <EditorToolBar />
-                <div className={classes.appSpacer} />
-                <Divider />
-              </div>
-              <div
-                id="root"
-                onClick={this.handleClick}
-                style={this.props.state.root.style}
-              >
-                {/* <div className={classes.appSpacer} /> */}
-                <Editor state={this.props.state} />
-              </div>
-            </main>
-          </div>
-          {/* <CustomDragLayer />
+              {/* <div className={classes.appSpacer} /> */}
+              <Editor state={this.props.state} />
+            </div>
+          </main>
+        </div>
+        {/* <CustomDragLayer />
         </DragDropContextProvider> */}
       </React.Fragment>
     );

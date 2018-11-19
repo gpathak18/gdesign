@@ -1,4 +1,5 @@
 export default {
   Text: "Text",
-  Image: "Image"
+  Image: "Image",
+  ImageGroup: 'ImageGroup'
 };

@@ -26,8 +26,6 @@ class ImageItem extends Component {
     this.setState({ url: url });
   }
 
-  showImage() {}
-
   showComponent() {
     const { classes } = this.props;
 

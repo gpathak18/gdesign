@@ -1,22 +1,17 @@
 import * as React from "react";
-import {
-  DropTarget
-} from "react-dnd";
+import { DropTarget } from "react-dnd";
 import ItemTypes from "./ItemTypes";
 import store from "./store";
 import { moveItem, sortItem, setSelectedNode } from "./actions";
 import TextItem from "./TextItem";
 import ImageItem from "./ImageItem";
-
+import ImageGroupItem from "./ImageGroupItem"
 const itemTarget = {
-
-  hover(props, monitor, component) {
-  },
+  hover(props, monitor, component) {},
 
   drop(props, monitor, component) {
     return { parent: props.id };
   }
-
 };
 
 function collect(connect, monitor) {
@@ -30,7 +25,6 @@ function collect(connect, monitor) {
 }
 
 class Container extends React.Component {
-
   constructor(props) {
     super(props);
   }
@@ -40,12 +34,11 @@ class Container extends React.Component {
   }
 
   moveCard(dragIndex, hoverIndex) {
-
     let item = {
       dragIndex,
       hoverIndex,
       parent: this.props.id
-    }
+    };
 
     store.dispatch(sortItem(item));
   }
@@ -60,7 +53,7 @@ class Container extends React.Component {
       let item = "";
       switch (this.props.state[node].type) {
         case ItemTypes.Text:
-        item = (
+          item = (
             <TextItem
               key={node}
               id={node}
@@ -75,7 +68,7 @@ class Container extends React.Component {
           );
           break;
         case ItemTypes.Image:
-        item = (
+          item = (
             <ImageItem
               key={node}
               id={node}
@@ -89,6 +82,21 @@ class Container extends React.Component {
             />
           );
           break;
+        case ItemTypes.ImageGroup:
+          item = (
+            <ImageGroupItem
+              key={node}
+              id={node}
+              index={i}
+              parent={root.type}
+              node={this.props.state[node]}
+              state={this.props.state}
+              moveCard={this.moveCard.bind(this)}
+              removeCard={this.removeCard.bind(this)}
+              type="ImageGroup"
+            />
+          );
+          break;
         default:
           this.items = this.items;
       }
@@ -97,7 +105,6 @@ class Container extends React.Component {
   }
 
   render() {
-
     const { canDrop, isOver, connectDropTarget, draggingItem, id } = this.props;
 
     this.draggingItem = draggingItem;
@@ -136,11 +143,10 @@ class Container extends React.Component {
       )
     );
   }
-
 }
 
 export default DropTarget(
-  [ItemTypes.Text, ItemTypes.Image],
+  [ItemTypes.Text, ItemTypes.Image, ItemTypes.ImageGroup],
   itemTarget,
   collect
 )(Container);

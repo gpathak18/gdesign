@@ -37,6 +37,8 @@ const CustomDragLayer = props => {
         return <DragPreview />;
       case ItemTypes.Image:
         return <DragPreview />;
+      case ItemTypes.ImageGroup:
+        return <DragPreview />;
       default:
         return null;
     }

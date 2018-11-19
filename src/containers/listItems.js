@@ -17,9 +17,13 @@ import Icon from "@material-ui/core/Icon";
 import { SketchPicker } from "react-color";
 import ColorPicker from "./ColorPicker";
 import store from "./store";
-import { setBgColor,setStyle } from "./actions";
+import { setBgColor, setStyle } from "./actions";
 import _ from "lodash";
 
+let state = {
+  rows: 1,
+  cols: 2
+}
 
 export const mainListItems = (
   <div>
@@ -28,9 +32,11 @@ export const mainListItems = (
     <DraggableItem name="Image" type="Image" iconName="insert_photos" />
     <DraggableItem
       name="Image Group"
-      type="imagegroup"
+      type="ImageGroup"
       iconName="collections"
-    />
+      state = {state}
+    >
+    </DraggableItem>
     <DraggableItem name="Splitter" type="divider" iconName="horizontal_split" />
     <DraggableItem name="Button" type="button" iconName="crop_landscape" />
     <DraggableItem name="Icons" type="icons" iconName="insert_emoticon" />
@@ -38,36 +44,31 @@ export const mainListItems = (
   </div>
 );
 
-let updateBackground = (option,color) => {
-  console.log('here',color,option)
-  store.dispatch(
-    setBgColor({ bgColor: color})
-  );
-}
+let updateBackground = (option, color) => {
+  console.log("here", color, option);
+  store.dispatch(setBgColor({ bgColor: color }));
+};
 
-let handleClick = (style) => {
- 
-  store.dispatch(
-    setStyle(style)
-  );
+let handleClick = style => {
+  store.dispatch(setStyle(style));
+};
 
-}
 
 export const secondaryListItems = (
   <div>
     <ListSubheader component="div">Alignement</ListSubheader>
     <ListItem style={{ cursor: "pointer" }}>
       <ToggleButtonGroup>
-        <ToggleButton onClick={() => handleClick({textAlign: 'left'})}>
+        <ToggleButton onClick={() => handleClick({ textAlign: "left" })}>
           <Icon>format_align_left</Icon>
         </ToggleButton>
-        <ToggleButton onClick={() => handleClick({textAlign: 'center'})}>
+        <ToggleButton onClick={() => handleClick({ textAlign: "center" })}>
           <Icon>format_align_center</Icon>
         </ToggleButton>
-        <ToggleButton onClick={() => handleClick({textAlign: 'right'})}>
+        <ToggleButton onClick={() => handleClick({ textAlign: "right" })}>
           <Icon>format_align_right</Icon>
         </ToggleButton>
-        <ToggleButton onClick={() => handleClick({textAlign: 'justify'})}>
+        <ToggleButton onClick={() => handleClick({ textAlign: "justify" })}>
           <Icon>format_align_justify</Icon>
         </ToggleButton>
       </ToggleButtonGroup>
