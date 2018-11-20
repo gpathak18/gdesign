@@ -154,7 +154,7 @@ function reducer(state = initialState, action) {
       ) {
         newState[action.payload.selectedNode].style = {
           ...newState[action.payload.selectedNode].style,
-          border: "2px solid #22194d"
+          border: "2px solid green"
         };
       }
 

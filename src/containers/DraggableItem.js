@@ -38,13 +38,19 @@ const styles = theme => ({
 });
 
 const itemSource = {
-  beginDrag(props,monitor, component) {
-    console.log('drag started',props, component)
-    return { 
-      parent: "menu", 
-      rows: props.state.rows || '',
-      cols: props.state.cols || ''
-    };
+  beginDrag(props, monitor, component) {
+    console.log("drag started", props, component);
+    if (props.state && props.state.rows && props.state.cols) {
+      return {
+        parent: "menu",
+        rows: props.state.rows || "",
+        cols: props.state.cols || ""
+      };
+    } else {
+      return {
+        parent: "menu"
+      };
+    }
   },
   endDrag(props, monitor) {
     const item = monitor.getItem();
@@ -105,9 +111,8 @@ function collect(connect, monitor) {
 }
 
 class DraggableItem extends Component {
- 
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       open: false,
       rows: 1,
@@ -130,11 +135,10 @@ class DraggableItem extends Component {
 
   handleChange = rowcol => event => {
     this.setState({
-      [rowcol]: parseInt(event.target.value),
+      [rowcol]: parseInt(event.target.value)
     });
-    this.props.state[rowcol] = parseInt(event.target.value)
+    this.props.state[rowcol] = parseInt(event.target.value);
   };
-
 
   render() {
     const {
@@ -176,7 +180,7 @@ class DraggableItem extends Component {
                   type="number"
                   // defaultValue="1"
                   value={this.state.rows}
-                  onChange={this.handleChange('rows')}
+                  onChange={this.handleChange("rows")}
                 />
                 <TextField
                   id="standard-dense"
@@ -186,7 +190,7 @@ class DraggableItem extends Component {
                   type="number"
                   // defaultValue="2"
                   value={this.state.cols}
-                  onChange={this.handleChange('cols')}
+                  onChange={this.handleChange("cols")}
                 />
               </ListItem>
             </List>
