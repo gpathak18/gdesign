@@ -15,12 +15,11 @@ import LinkBlot from "./LinkBlot";
 import ImageBlot from "./ImageBlot";
 import ColorPicker from "./ColorPicker";
 import { IndentStyle } from "./IndentAttributor";
-import { FontAttr } from "./FontFamilyAttributor";
+import { FontAttributor } from "./FontFamilyAttributor";
 import img from "../images/sfm.png";
 import FontFamilyPicker from "./FontFamilyPicker";
 import FontSizePicker from "./FontSizePicker";
-
-
+const Parchment = Quill.import("parchment");
 // let FontStyle = Quill.import('attributors/style/font');
 // FontStyle.whitelist =[false, 'Arial, Helvetica, sans-serif', 'Georgia, serif', 'Impact, Charcoal, sans-serif', 'Tahoma, Geneva, sans-serif', 'Times New Roman, Times, serif, -webkit-standard', 'Verdana, Geneva, sans-serif'];
 // Quill.register(FontStyle, true);
@@ -79,14 +78,18 @@ const SizeStyle = Quill.import("attributors/style/size");
 // const LinkStyle = Quill.import('attributors/style/link');
 // const CodeStyle = Quill.import('attributors/style/code');
 
+// let Font = new Parchment.Attributor.Style('font', 'font-family', {
+//   whitelist: ['Roboto', 'Arial', 'Segoe UI']   // Having no value implies left align
+// });
+// Parchment.register(Font);
+
 // Quill.register(BackgroundStyle, true);
 Quill.register(ColorStyle, true);
 Quill.register(SizeStyle, true);
-Quill.register(FontAttr, true);
+Quill.register(FontAttributor, true);
 Quill.register(IndentStyle, true);
 Quill.register(AlignStyle, true);
-// Quill.register(FontAttributor);
-// Quill.register(BoldStyle);
+// Quill.register(BoldStyle, true);
 // Quill.register(ItalicStyle, true);
 // Quill.register(StrikethroughStyle, true);
 // Quill.register(ScriptStyle, true);
@@ -181,17 +184,19 @@ class EditorToolBar extends Component {
   }
 
   render() {
-    
     const { classes } = this.props;
 
     return (
       <React.Fragment>
         <div className={classes.toggleContainer}>
           <ToggleButtonGroup id="toolbar">
-            <ToggleButton onClick={() => this.formatText("bold")} disabled={true}>
+            <ToggleButton onClick={() => this.formatText("bold")}>
               <Icon>format_bold</Icon>
             </ToggleButton>
-            <ToggleButton onClick={() => this.formatText("italic")}  disabled={false}> 
+            <ToggleButton
+              onClick={() => this.formatText("italic")}
+              disabled={false}
+            >
               <Icon>format_italic</Icon>
             </ToggleButton>
             <ToggleButton onClick={() => this.formatText("underline")}>

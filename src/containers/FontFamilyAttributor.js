@@ -7,13 +7,13 @@ class FontStyleAttributor extends Parchment.Attributor.Style {
   }
 }
 
-let FontAttr = new FontStyleAttributor("font", "font-family", {
+let FontAttributor = new FontStyleAttributor("font", "font-family", {
   scope: Parchment.Scope.INLINE,
   whitelist: [
     "Segoe UI",
     "Cantarell",
     "Droid Sans",
-    "Fira Sans",
+    "Arial",
     "Roboto",
     "Oxygen",
     "Helvetica",
@@ -21,4 +21,5 @@ let FontAttr = new FontStyleAttributor("font", "font-family", {
   ]
 });
 
-export { FontAttr };
+export { FontAttributor };
+

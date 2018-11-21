@@ -34,7 +34,7 @@ class FontFamilyPicker extends React.Component {
       return;
     }
     this.setState({ open: false, font: event.target.innerText });
-    this.props.formatTextCallback('font', 'Arial');
+    this.props.formatTextCallback('font', this.state.font);
   };
 
   render() {
