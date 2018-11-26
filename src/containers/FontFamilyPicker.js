@@ -21,10 +21,10 @@ const styles = theme => ({
 
 class FontFamilyPicker extends React.Component {
   state = {
-    open: false,
-    font: "Roboto"
+    open: false
   };
 
+  selectFont = 'Arial'
   handleToggle = () => {
     this.setState(state => ({ open: !state.open }));
   };
@@ -33,8 +33,9 @@ class FontFamilyPicker extends React.Component {
     if (this.anchorEl.contains(event.target)) {
       return;
     }
-    this.setState({ open: false, font: event.target.innerText });
-    this.props.formatTextCallback('font', this.state.font);
+    this.setState({ open: false });
+    this.selectFont = event.target.innerText
+    this.props.formatTextCallback('font',  this.selectFont);
   };
 
   render() {
@@ -54,7 +55,7 @@ class FontFamilyPicker extends React.Component {
             aria-haspopup="true"
             onClick={this.handleToggle}
           >
-            {this.state.font}
+            {this.selectFont}
             <Icon style={{ paddingLeft: "5px" }}>arrow_drop_down</Icon>
           </Button>
           <Popper
@@ -76,14 +77,22 @@ class FontFamilyPicker extends React.Component {
                 <Paper>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList>
-                      <MenuItem onClick={this.handleClose}>sans-serif</MenuItem>
-                      <MenuItem onClick={this.handleClose}>Cantarell</MenuItem>
-                      <MenuItem onClick={this.handleClose}>Droid Sans</MenuItem>
-                      <MenuItem onClick={this.handleClose}>Fira Sans</MenuItem>
-                      <MenuItem onClick={this.handleClose}>roboto</MenuItem>
-                      <MenuItem onClick={this.handleClose}>Oxygen</MenuItem>
-                      <MenuItem onClick={this.handleClose}>helvetica</MenuItem>
-                      <MenuItem onClick={this.handleClose}>arial</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Arial</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Arial Black</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Helvetica</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Times New Roman</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Times</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Courier</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Courier New</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Verdana</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Tahoma</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Impact</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Georgia</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Mirza</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Andale Mono</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Monospace</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Roboto</MenuItem>
+                      <MenuItem onClick={this.handleClose}>Palatino</MenuItem>
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>

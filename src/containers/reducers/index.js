@@ -19,7 +19,7 @@ const initialState = {
       borderRadius: "2px",
       overflow: "auto",
       minHeight: "45px",
-      border: "2px dashed gray"
+      border: "2px dashed transparent"
     }
   },
   body: {
@@ -30,9 +30,9 @@ const initialState = {
       borderRadius: "2px",
       overflow: "auto",
       minHeight: "45px",
-      border: "2px dashed gray",
-      marginTop: "1px",
-      marginBottom: "1px"
+      border: "2px dashed transparent",
+      // marginTop: "1px",
+      // marginBottom: "1px"
     }
   },
   footer: {
@@ -43,7 +43,7 @@ const initialState = {
       borderRadius: "2px",
       overflow: "auto",
       minHeight: "45px",
-      border: "2px dashed gray"
+      border: "2px dashed transparent"
     }
   }
 };

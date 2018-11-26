@@ -84,4 +84,4 @@ ImageItem.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ImageItem);
+export default withStyles(styles)(ButtonItem);

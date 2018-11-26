@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import img from "../images/sfm.png";
+import img from "../images/efg.gif";
 import store from "./store";
 import { setDroppedItem, setSelectedNode } from "./actions";
 

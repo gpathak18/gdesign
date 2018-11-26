@@ -16,13 +16,10 @@ import ImageBlot from "./ImageBlot";
 import ColorPicker from "./ColorPicker";
 import { IndentStyle } from "./IndentAttributor";
 import { FontAttributor } from "./FontFamilyAttributor";
-import img from "../images/sfm.png";
+import { SizeAttributor } from './FontSizeAttributor'
+import img from "../images/abc.jpg";
 import FontFamilyPicker from "./FontFamilyPicker";
 import FontSizePicker from "./FontSizePicker";
-const Parchment = Quill.import("parchment");
-// let FontStyle = Quill.import('attributors/style/font');
-// FontStyle.whitelist =[false, 'Arial, Helvetica, sans-serif', 'Georgia, serif', 'Impact, Charcoal, sans-serif', 'Tahoma, Geneva, sans-serif', 'Times New Roman, Times, serif, -webkit-standard', 'Verdana, Geneva, sans-serif'];
-// Quill.register(FontStyle, true);
 
 let Inline = Quill.import("blots/inline");
 let Block = Quill.import("blots/block");
@@ -53,10 +50,6 @@ HeaderBlot.tagName = ["H1", "H2"];
 ImageBlot.blotName = "image";
 ImageBlot.tagName = "img";
 
-// var Font = Quill.import("attributors/class/font");
-// We do not add Aref Ruqaa since it is the default
-// Font.whitelist = ["Oxygen", "Roboto"];
-
 Quill.register(BoldBlot);
 Quill.register(ItalicBlot);
 Quill.register(LinkBlot);
@@ -65,10 +58,9 @@ Quill.register(HeaderBlot);
 Quill.register(DividerBlot);
 Quill.register(ImageBlot);
 
-// const BackgroundStyle = Quill.import("attributors/style/background");
 const ColorStyle = Quill.import("attributors/style/color");
 const AlignStyle = Quill.import("attributors/style/align");
-const SizeStyle = Quill.import("attributors/style/size");
+// const SizeStyle = Quill.import("attributors/style/size");
 // const FontStyle = Quill.import("attributors/style/font");
 // const BoldStyle = Quill.import('attributors/style/bold');
 // const ItalicStyle = Quill.import('attributors/style/italic');
@@ -78,25 +70,13 @@ const SizeStyle = Quill.import("attributors/style/size");
 // const LinkStyle = Quill.import('attributors/style/link');
 // const CodeStyle = Quill.import('attributors/style/code');
 
-// let Font = new Parchment.Attributor.Style('font', 'font-family', {
-//   whitelist: ['Roboto', 'Arial', 'Segoe UI']   // Having no value implies left align
-// });
-// Parchment.register(Font);
 
-// Quill.register(BackgroundStyle, true);
 Quill.register(ColorStyle, true);
-Quill.register(SizeStyle, true);
+// Quill.register(SizeStyle, true);
 Quill.register(FontAttributor, true);
+Quill.register(SizeAttributor, true);
 Quill.register(IndentStyle, true);
 Quill.register(AlignStyle, true);
-// Quill.register(BoldStyle, true);
-// Quill.register(ItalicStyle, true);
-// Quill.register(StrikethroughStyle, true);
-// Quill.register(ScriptStyle, true);
-// Quill.register(ItalicStyle, true);
-// Quill.register(UnderlineStyle, true);
-// Quill.register(LinkStyle);
-// Quill.register(CodeStyle, true);
 
 const styles = theme => ({
   toggleContainer: {

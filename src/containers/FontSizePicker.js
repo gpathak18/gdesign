@@ -25,6 +25,7 @@ class FontSizePicker extends React.Component {
     open: false
   };
 
+  size = '16'
   handleToggle = () => {
     this.setState(state => ({ open: !state.open }));
   };
@@ -35,6 +36,10 @@ class FontSizePicker extends React.Component {
     }
 
     this.setState({ open: false });
+
+    this.size = event.target.innerText
+    this.props.formatTextCallback('size', this.size);
+
   };
 
   render() {
@@ -75,18 +80,17 @@ class FontSizePicker extends React.Component {
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>
                   <MenuList>
-                    <MenuItem onClick={this.handleClose}>12</MenuItem>
-                    <MenuItem onClick={this.handleClose}>14</MenuItem>
-                    <MenuItem onClick={this.handleClose}>16</MenuItem>
-                    <MenuItem onClick={this.handleClose}>18</MenuItem>
-                    <MenuItem onClick={this.handleClose}>20</MenuItem>
-                    <MenuItem onClick={this.handleClose}>24</MenuItem>
-                    <MenuItem onClick={this.handleClose}>30</MenuItem>
-                    <MenuItem onClick={this.handleClose}>36</MenuItem>
-                    <MenuItem onClick={this.handleClose}>42</MenuItem>
-                    <MenuItem onClick={this.handleClose}>48</MenuItem>
-                    <MenuItem onClick={this.handleClose}>60</MenuItem>
-                    <MenuItem onClick={this.handleClose}>72</MenuItem>
+                    <MenuItem onClick={this.handleClose}>12px</MenuItem>
+                    <MenuItem onClick={this.handleClose}>14px</MenuItem>
+                    <MenuItem onClick={this.handleClose}>16px</MenuItem>
+                    <MenuItem onClick={this.handleClose}>18px</MenuItem>
+                    <MenuItem onClick={this.handleClose}>20px</MenuItem>
+                    <MenuItem onClick={this.handleClose}>24px</MenuItem>
+                    <MenuItem onClick={this.handleClose}>30px</MenuItem>
+                    <MenuItem onClick={this.handleClose}>36px</MenuItem>
+                    <MenuItem onClick={this.handleClose}>48px</MenuItem> 
+                    <MenuItem onClick={this.handleClose}>60px</MenuItem>
+                    <MenuItem onClick={this.handleClose}>72px</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
