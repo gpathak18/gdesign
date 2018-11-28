@@ -48,6 +48,24 @@ export default class DragPreview extends React.PureComponent {
             </ListItem>
           </div>
         );
+      case ItemTypes.Button:
+        return (
+          <div style={styles}>
+            <ListItem>
+              <Icon>crop_landscape</Icon>
+              <ListItemText primary="Button" />
+            </ListItem>
+          </div>
+        );
+      case ItemTypes.Video:
+        return (
+          <div style={styles}>
+            <ListItem>
+              <Icon>videocam</Icon>
+              <ListItemText primary="Video" />
+            </ListItem>
+          </div>
+        );
       case ItemTypes.ImageGroup:
         return (
           <div style={styles}>

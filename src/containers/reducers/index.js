@@ -19,7 +19,7 @@ const initialState = {
       borderRadius: "2px",
       overflow: "auto",
       minHeight: "45px",
-      border: "2px dashed transparent"
+      border: "2px dashed gray"
     }
   },
   body: {
@@ -30,7 +30,7 @@ const initialState = {
       borderRadius: "2px",
       overflow: "auto",
       minHeight: "45px",
-      border: "2px dashed transparent",
+      border: "2px dashed gray"
       // marginTop: "1px",
       // marginBottom: "1px"
     }
@@ -43,16 +43,12 @@ const initialState = {
       borderRadius: "2px",
       overflow: "auto",
       minHeight: "45px",
-      border: "2px dashed transparent"
+      border: "2px dashed gray"
     }
   }
 };
 
 function reducer(state = initialState, action) {
-  let sequence = {};
-  let row = {};
-  let obj = {};
-
   switch (action.type) {
     case "ADD_ROW":
       let rowstoadd = [];
@@ -225,32 +221,42 @@ function reducer(state = initialState, action) {
 
       return obj;
 
+    case "UPDATE_NODE_STYLE":
+      let updtStyleNode = action.payload.node;
+      let updtStyleState = Object.assign({}, state);
+      if (!_.isEmpty(updtStyleState[updtStyleNode])) {
+        updtStyleState[updtStyleNode].style = {
+          ...updtStyleState[updtStyleNode].style,
+          ...action.payload.style
+        };
+      }
+      console.log("updated state", updtStyleState);
+      return updtStyleState;
     case "ADD_IMAGE_GROUP":
-    
       let imgGrpState = Object.assign({}, state);
 
       let imgGrpRows = parseInt(action.payload.item.rows);
       let imgGrpColumns = parseInt(action.payload.item.columns);
-      
+
       for (let i = 0; i < imgGrpRows; i++) {
         for (let j = 0; j < imgGrpColumns; j++) {
-          imgGrpState.seq = imgGrpState.seq+1;
+          imgGrpState.seq = imgGrpState.seq + 1;
           imgGrpState[imgGrpState.seq] = {
             type: "Image",
             url: "",
             style: {},
             child: []
           };
-          action.payload.item.child.push(imgGrpState.seq)
+          action.payload.item.child.push(imgGrpState.seq);
         }
       }
 
-      imgGrpState.seq = imgGrpState.seq+1;
+      imgGrpState.seq = imgGrpState.seq + 1;
       imgGrpState[imgGrpState.seq] = action.payload.item;
 
-      imgGrpState[action.payload.parent].child.push(imgGrpState.seq)
+      imgGrpState[action.payload.parent].child.push(imgGrpState.seq);
 
-      console.log('img grp',imgGrpState)
+      console.log("img grp", imgGrpState);
       return imgGrpState;
     case "SET_STYLE":
       let styleNode = state.selectedNode;

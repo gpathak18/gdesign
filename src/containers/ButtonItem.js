@@ -15,50 +15,9 @@ const styles = theme => ({
   }
 });
 class ButtonItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { url: "" }; // You can also pass a Quill Delta here
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(url) {
-    console.log(url);
-    this.setState({ url: url });
-  }
-
-  showComponent() {
-    const { classes } = this.props;
-
-    if (this.state.url.length > 0) {
-      return (
-        <div>
-          <img src={img} />
-        </div>
-      );
-    } else {
-      return (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <input
-            accept="image/*"
-            className={classes.input}
-            id="image-file"
-            multiple
-            type="file"
-            onChange={e => this.handleChange(e.target.value)}
-          />
-          <label htmlFor="image-file">
-            <Button
-              variant="outlined"
-              component="span"
-              className={classes.button}
-            >
-              Browse
-            </Button>
-          </label>
-        </div>
-      );
-    }
-  }
+  handleChange = () => {
+    console.log("clicked");
+  };
 
   handleClick = event => {
     event.stopPropagation();
@@ -68,19 +27,20 @@ class ButtonItem extends Component {
   };
 
   render() {
+    console.log(this.props.state[this.props.id].style)
     return (
-      <div
+      <button
         id={this.props.id}
         onClick={this.handleClick}
         style={this.props.state[this.props.id].style}
       >
-        {this.showComponent()}
-      </div>
+        Text
+      </button>
     );
   }
 }
 
-ImageItem.propTypes = {
+ButtonItem.propTypes = {
   classes: PropTypes.object.isRequired
 };
 

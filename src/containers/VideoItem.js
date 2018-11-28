@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import img from "../images/abc.png";
 import store from "./store";
-import { setDroppedItem, setSelectedNode } from "./actions";
+import { setSelectedNode } from "./actions";
+import TextField from "@material-ui/core/TextField";
+import classNames from "classnames";
 
 const styles = theme => ({
   button: {
@@ -12,38 +13,47 @@ const styles = theme => ({
   },
   input: {
     display: "none"
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
+    width: 400
+  },
+  dense: {
+    marginTop: 0
   }
 });
-class ImageItem extends Component {
+class VideoItem extends Component {
   constructor(props) {
     super(props);
-    this.state = { url: "" }; // You can also pass a Quill Delta here
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(url) {
-    console.log(url);
-    this.setState({ url: url });
+    this.state = { url: "", showVideo: false };
   }
 
   showComponent() {
     const { classes } = this.props;
 
-    if (this.state.url.length > 0) {
+    if (this.state.showVideo) {
       return (
         <div>
-          <img src={img} />
+          <iframe
+            width="480"
+            height="320"
+            src={this.state.url}
+          />
         </div>
       );
     } else {
       return (
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <input
-            accept="image/*"
-            className={classes.input}
-            id="image-file"
-            multiple
-            type="file"
+          <TextField
+            id="standard-dense"
+            label="Video URL"
+            className={classNames(classes.textField, classes.dense)}
+            margin="dense"
+          
+            // defaultValue="2"
+            value={'https://www.youtube.com/embed/tgbNymZ7vqY'}
             onChange={e => this.handleChange(e.target.value)}
           />
           <label htmlFor="image-file">
@@ -51,8 +61,9 @@ class ImageItem extends Component {
               variant="outlined"
               component="span"
               className={classes.button}
+              onClick={e => this.handeSave()}
             >
-              Browse
+              Save
             </Button>
           </label>
         </div>
@@ -67,6 +78,15 @@ class ImageItem extends Component {
     );
   };
 
+  handleChange = url => {
+    console.log(url);
+    this.setState({ url: url });
+  };
+
+  handeSave = () => {
+      console.log('saving')
+    this.setState(state => ({ url: state.url, showVideo: !state.showVideo }));
+  }
   render() {
     return (
       <div
@@ -80,8 +100,8 @@ class ImageItem extends Component {
   }
 }
 
-ImageItem.propTypes = {
+VideoItem.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ImageItem);
+export default withStyles(styles)(VideoItem);

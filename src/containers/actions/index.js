@@ -7,6 +7,7 @@ export const setImageGroupItem = node => ({ type: "ADD_IMAGE_GROUP", payload: no
 export const setTitle = node => ({ type: "SET_TITLE", payload: node });
 export const setBgColor = node => ({ type: "SET_BG_COLOR", payload: node });
 export const setStyle = node => ({ type: "SET_STYLE", payload: node });
+export const updateStyle = node => ({ type: "UPDATE_NODE_STYLE", payload: node });
 export const removeItem = node => ({ type: "REMOVE_ITEM", payload: node });
 export const moveItem = node => ({ type: "MOVE_ITEM", payload: node });
 export const sortItem = node => ({ type: "SORT_ITEM", payload: node });

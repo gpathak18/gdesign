@@ -22,8 +22,12 @@ import _ from "lodash";
 
 let state = {
   rows: 1,
-  cols: 2
-}
+  cols: 2,
+  butWidth: 100,
+  butHeight: 30,
+  butRadius: 2,
+  butBorder: 2
+};
 
 export const mainListItems = (
   <div>
@@ -34,13 +38,17 @@ export const mainListItems = (
       name="Image Group"
       type="ImageGroup"
       iconName="collections"
-      state = {state}
-    >
-    </DraggableItem>
-    <DraggableItem name="Splitter" type="divider" iconName="horizontal_split" />
-    <DraggableItem name="Button" type="button" iconName="crop_landscape" />
-    <DraggableItem name="Icons" type="icons" iconName="insert_emoticon" />
-    <DraggableItem name="Video" type="video" iconName="videocam" />
+      state={state}
+    />
+    <DraggableItem
+      name="Button"
+      type="Button"
+      iconName="crop_landscape"
+      state={state}
+    />
+    <DraggableItem name="Splitter" type="Divider" iconName="horizontal_split" />
+    <DraggableItem name="Icons" type="Icons" iconName="insert_emoticon" />
+    <DraggableItem name="Video" type="Video" iconName="videocam" />
   </div>
 );
 
@@ -52,7 +60,6 @@ let updateBackground = (option, color) => {
 let handleClick = style => {
   store.dispatch(setStyle(style));
 };
-
 
 export const secondaryListItems = (
   <div>

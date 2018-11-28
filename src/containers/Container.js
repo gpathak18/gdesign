@@ -5,7 +5,9 @@ import store from "./store";
 import { moveItem, sortItem, setSelectedNode } from "./actions";
 import TextItem from "./TextItem";
 import ImageItem from "./ImageItem";
-import ImageGroupItem from "./ImageGroupItem"
+import ButtonItem from "./ButtonItem";
+import ImageGroupItem from "./ImageGroupItem";
+import VideoItem from "./VideoItem";
 const itemTarget = {
   hover(props, monitor, component) {},
 
@@ -82,6 +84,37 @@ class Container extends React.Component {
             />
           );
           break;
+        case ItemTypes.Button:
+          item = (
+            <ButtonItem
+              key={node}
+              id={node}
+              index={i}
+              parent={root.type}
+              node={this.props.state[node]}
+              state={this.props.state}
+              moveCard={this.moveCard.bind(this)}
+              removeCard={this.removeCard.bind(this)}
+              type="Button"
+            />
+          );
+          break;
+        case ItemTypes.Video:
+            console.log('adding video')
+          item = (
+            <VideoItem
+              key={node}
+              id={node}
+              index={i}
+              parent={root.type}
+              node={this.props.state[node]}
+              state={this.props.state}
+              moveCard={this.moveCard.bind(this)}
+              removeCard={this.removeCard.bind(this)}
+              type="Video"
+            />
+          );
+          break;
         case ItemTypes.ImageGroup:
           item = (
             <ImageGroupItem
@@ -146,7 +179,13 @@ class Container extends React.Component {
 }
 
 export default DropTarget(
-  [ItemTypes.Text, ItemTypes.Image, ItemTypes.ImageGroup],
+  [
+    ItemTypes.Text,
+    ItemTypes.Image,
+    ItemTypes.ImageGroup,
+    ItemTypes.Video,
+    ItemTypes.Button
+  ],
   itemTarget,
   collect
 )(Container);
