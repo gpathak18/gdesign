@@ -34,11 +34,15 @@ const CustomDragLayer = props => {
   function renderItem() {
     switch (itemType) {
       case ItemTypes.Text:
-        return <DragPreview type={ItemTypes.Text}/>;
+        return <DragPreview type={ItemTypes.Text} />;
       case ItemTypes.Image:
-        return <DragPreview type={ItemTypes.Image}/>;
+        return <DragPreview type={ItemTypes.Image} />;
+      case ItemTypes.Button:
+        return <DragPreview type={ItemTypes.Button} />;
+      case ItemTypes.Video:
+        return <DragPreview type={ItemTypes.Video} />;
       case ItemTypes.ImageGroup:
-        return <DragPreview type={ItemTypes.ImageGroup}/>;
+        return <DragPreview type={ItemTypes.ImageGroup} />;
       default:
         return null;
     }
