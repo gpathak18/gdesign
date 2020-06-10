@@ -1,22 +1,5 @@
 import React, { Component } from "react";
-import { DragDropContextProvider } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
-import CustomDragLayer from "./CustomDragLayer";
 import Row from "../backup/Row";
-import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core/styles";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import store from "./store";
-import HeaderEditor from '../backup/HeaderEditor'
-import { adjustHeight } from "./actions";
-import ReactQuill, { Quill } from 'react-quill';
-import { Columns, Cell, Splitter } from "react-resizable-grid";
-import IndentAttributor from './IndentAttributor';
-import DraggableItem from './DraggableItem'
-import FooterEditor from '../backup/FooterEditor'
-import BodyEditor from '../backup/BodyEditor'
 import Container from './Container'
 
 class Editor extends Component {

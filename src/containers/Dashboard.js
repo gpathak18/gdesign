@@ -15,25 +15,15 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
-import Editor from "./Editor";
-import DraggableItem from "./DraggableItem";
-import CenteredTabs from "./CenteredTabs";
-import { DragDropContextProvider } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
-import CustomDragLayer from "./CustomDragLayer";
+// import Editor from "./Editor";
 import EditorToolBar from "./EditorToolBar";
 import store from "./store";
 import { setTitle } from "./actions";
 import { connect } from "react-redux";
-import ColorPicker from "./ColorPicker";
 import { setDroppedItem, setSelectedNode } from "./actions";
 import TextField from "@material-ui/core/TextField";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Collapse from "@material-ui/core/Collapse";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Icon from "@material-ui/core/Icon";
+import {Editor, EditorState} from "draft-js";
 
 
 const drawerWidth = 260;
@@ -89,6 +79,9 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.updateTitle = this.updateTitle.bind(this);
+    this.state = {
+      editorState: EditorState.createEmpty()
+    }
   }
 
   showTitleOrEditor = () => {
@@ -139,6 +132,11 @@ class Dashboard extends React.Component {
     store.dispatch(setSelectedNode({ selectedNode: event.currentTarget.id }));
   };
 
+  onChange = (editorState) => {
+    this.setState({
+      editorState
+    })
+  }
 
   render() {
     const { classes } = this.props;
@@ -190,7 +188,8 @@ class Dashboard extends React.Component {
               style={this.props.state.root.style}
             >
               {/* <div className={classes.appSpacer} /> */}
-              <Editor state={this.props.state} />
+              {/* <Editor state={this.props.state} /> */}
+              <Editor editorState={this.state.editorState} onChange={this.onChange}></Editor>
             </div>
           </main>
         </div>
